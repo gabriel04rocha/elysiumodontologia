@@ -28,9 +28,8 @@ db.defaults({
 
 // ── App ──
 const app = express();
-// No cPanel, Passenger define a PORT automaticamente. 
-// Se não houver, colocamos 0 para o S.O. escolher qualquer uma disponível e evitar EADDRINUSE.
-const PORT = process.env.PORT || 0;
+// No Docker (Dokploy), usamos a 3000 como padrão interno.
+const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || "changeme";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 const KOMMO_CLIENT_ID = process.env.KOMMO_CLIENT_ID;
