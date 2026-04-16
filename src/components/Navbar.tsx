@@ -71,13 +71,6 @@ export function Navbar() {
           {/* CTA desktop */}
           <div className="hidden lg:flex items-center gap-4">
             <a
-              href="tel:+556299999999"
-              className="flex items-center gap-2 text-sm font-body text-white/65 hover:text-white transition-colors"
-            >
-              <Phone className="w-4 h-4" style={{ color: "#41c1bb" }} />
-              <span>(62) 9999-9999</span>
-            </a>
-            <a
               id="nav-cta"
               href="/contato"
               className="btn-teal px-6 py-2.5 text-sm font-semibold inline-block"
