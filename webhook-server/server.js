@@ -28,7 +28,9 @@ db.defaults({
 
 // ── App ──
 const app = express();
-const PORT = process.env.PORT || 3001;
+// No cPanel, Passenger define a PORT automaticamente. 
+// Se não houver, colocamos 0 para o S.O. escolher qualquer uma disponível e evitar EADDRINUSE.
+const PORT = process.env.PORT || 0;
 const JWT_SECRET = process.env.JWT_SECRET || "changeme";
 const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "admin123";
 const KOMMO_CLIENT_ID = process.env.KOMMO_CLIENT_ID;
@@ -131,7 +133,8 @@ async function getKommoToken() {
       };
       db.set("kommoAuth", auth).write();
     } catch (e) {
-      console.error("Erro ao renovar token Kommo", e.response?.data || e.message);
+      const errorData = (e.response && e.response.data) ? JSON.stringify(e.response.data) : e.message;
+      console.error("Erro ao renovar token Kommo", errorData);
       return null;
     }
   }
@@ -153,8 +156,8 @@ app.post("/submit", submitLimiter, async (req, res) => {
     id: Date.now().toString(),
     name: name.trim(),
     phone: phone.trim(),
-    email: email?.trim() || null,
-    message: message?.trim() || null,
+    email: (email && email.trim) ? email.trim() : null,
+    message: (message && message.trim) ? message.trim() : null,
     createdAt: new Date().toISOString(),
     webhooksSent: [],
     webhookErrors: [],
@@ -207,7 +210,8 @@ app.post("/submit", submitLimiter, async (req, res) => {
          headers: { Authorization: `Bearer ${kommoAuth.access_token}` } 
       });
     } catch(err) {
-      console.error("Erro na criação do Kommo Lead:", err.response?.data || err.message);
+      const errorData = (err.response && err.response.data) ? JSON.stringify(err.response.data) : err.message;
+      console.error("Erro na criação do Kommo Lead:", errorData);
     }
   }
 
@@ -291,7 +295,7 @@ app.get("/admin/kommo/status", requireAuth, (req, res) => {
   
   res.json({ 
      authorized: !!(auth && auth.access_token), 
-     domain: auth?.base_domain,
+     domain: auth ? auth.base_domain : null,
      client_id: KOMMO_CLIENT_ID,
      redirect_uri,
      config: config || {}
@@ -323,7 +327,8 @@ app.get("/admin/kommo/callback", async (req, res) => {
      
      res.send("<div style='font-family:sans-serif;text-align:center;padding:50px;'>Autenticado com sucesso! O Webhook agora tem acesso ao Kommo.<br><br><button onclick='window.close()'>Pode fechar esta aba</button></div>");
   } catch(err) {
-     res.send(`<div style='color:red'>Erro ao autenticar: ${JSON.stringify(err.response?.data || err.message)}</div>`);
+     const errorData = (err.response && err.response.data) ? JSON.stringify(err.response.data) : err.message;
+     res.send(`<div style='color:red'>Erro ao autenticar: ${errorData}</div>`);
   }
 });
 
