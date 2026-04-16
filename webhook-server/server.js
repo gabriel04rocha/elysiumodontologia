@@ -42,6 +42,16 @@ app.use(
   })
 );
 
+// ── Base URL Middleware ──
+// Remove '/api' caso o Passenger/Proxy ignore o rewrite nativo
+app.use((req, res, next) => {
+  if (req.url.startsWith('/api/')) {
+    req.url = req.url.substring(4);
+  } else if (req.url === '/api') {
+    req.url = '/';
+  }
+  next();
+});
 // ── Rate limiter ──
 const submitLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,
