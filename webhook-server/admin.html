@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel Webhook - Elysium</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body { background-color: #f0fdfa; color: #1e293b; font-family: system-ui, -apple-system, sans-serif; }
+    .glass { background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.5); }
+    .btn-teal { background: linear-gradient(135deg, #2d9f99, #41c1bb); color: white; }
+    .btn-teal:hover { opacity: 0.9; }
+    .tab-active { border-bottom: 2px solid #134e4a; color: #134e4a; font-weight: bold; }
+    .tab-inactive { color: #94a3b8; font-weight: bold; cursor: pointer; }
+    .tab-inactive:hover { color: #0f766e; }
+  </style>
+</head>
+<body class="min-h-screen p-6">
+  <div class="max-w-5xl mx-auto">
+    <header class="mb-6 flex justify-between items-end border-b border-teal-200 pb-4">
+      <div>
+        <h1 class="text-3xl font-bold text-teal-800">Painel de Integração</h1>
+      </div>
+      <button id="logoutBtn" onclick="logout()" class="hidden text-sm text-red-500 hover:text-red-700 font-semibold">Sair</button>
+    </header>
+
+    <!-- Login Area -->
+    <div id="loginSection" class="glass p-8 rounded-2xl shadow-lg max-w-sm mx-auto mt-20">
+      <h2 class="text-xl font-bold mb-4 text-center text-teal-900">Acesso Restrito</h2>
+      <form onsubmit="handleLogin(event)" class="flex flex-col gap-4">
+        <div>
+          <label class="block text-sm font-semibold mb-1">Senha de Administrador</label>
+          <input type="password" id="passwordInput" required class="w-full px-4 py-2 rounded-lg border border-teal-200 focus:outline-none focus:border-teal-500">
+        </div>
+        <p id="loginError" class="text-xs text-red-500 hidden"></p>
+        <button type="submit" class="btn-teal py-2 rounded-lg font-semibold shadow-md">Entrar</button>
+      </form>
+    </div>
+
+    <!-- Dashboard Area -->
+    <div id="dashboardSection" class="hidden">
+      <!-- Tabs -->
+      <div class="flex gap-4 mb-6 border-b border-teal-100">
+        <div id="tab1-btn" class="px-2 pb-2 tab-active" onclick="switchTab(1)">Kommo CRM</div>
+        <div id="tab2-btn" class="px-2 pb-2 tab-inactive" onclick="switchTab(2)">Webhooks Extras</div>
+      </div>
+
+      <!-- Tab 1: Kommo -->
+      <div id="tab1-content">
+        <div class="glass p-6 rounded-2xl shadow-sm border border-teal-100">
+          <div id="kommoAuthBox" class="bg-white p-4 rounded-lg border border-teal-50 mb-6 flex items-center justify-between">
+            <div>
+              <p class="font-bold text-teal-900 text-lg">Status da Conta: <span id="kStatus" class="text-red-500">Não Autorizado</span></p>
+              <p class="text-xs text-slate-500 mt-1">Configure o fluxo oAuth para enviar os leads da página pro seu CRM.</p>
+              <p class="text-[11px] font-mono text-slate-400 mt-2">Sua Redirect URI: <span id="kRedirect" class="font-bold text-teal-700"></span></p>
+            </div>
+            <button id="kAuthBtn" onclick="authorizeKommo()" class="btn-teal px-6 py-2 rounded-lg shadow-md font-bold text-sm hidden">Autorizar Kommo</button>
+            <button id="kRefreshBtn" onclick="loadKommoStatus()" class="bg-slate-100 px-4 py-2 rounded text-xs font-semibold hover:bg-slate-200 hidden">Recarregar</button>
+          </div>
+
+          <div id="kommoConfigBox" class="hidden">
+            <h2 class="font-bold text-xl text-teal-900 mb-4">Mapeamento de Funil e Campos</h2>
+            <div class="grid md:grid-cols-2 gap-6">
+              <div class="flex flex-col gap-3">
+                <label class="font-semibold text-sm">Funil (Pipeline)</label>
+                <select id="kPipeline" onchange="updateStages()" class="p-2 border rounded text-sm w-full outline-none focus:border-teal-400"></select>
+
+                <label class="font-semibold text-sm mt-2">Etapa Inicial</label>
+                <select id="kStage" class="p-2 border rounded text-sm w-full outline-none focus:border-teal-400"></select>
+              </div>
+              <div class="flex flex-col gap-3">
+                <label class="font-semibold text-sm">Campo Kommo para: "Telefone/WhatsApp"</label>
+                <select id="kFieldPhone" class="p-2 border rounded text-sm w-full outline-none focus:border-teal-400"></select>
+
+                <label class="font-semibold text-sm mt-2">Campo Kommo para: "E-mail"</label>
+                <select id="kFieldEmail" class="p-2 border rounded text-sm w-full outline-none focus:border-teal-400"></select>
+
+                <label class="font-semibold text-sm mt-2">Campo Kommo para: "Mensagem do Paciente"</label>
+                <select id="kFieldMsg" class="p-2 border rounded text-sm w-full outline-none focus:border-teal-400"></select>
+              </div>
+            </div>
+            <button onclick="saveKommoConfig()" class="btn-teal w-full py-3 mt-6 rounded-lg font-bold shadow-md">Salvar Regras do CRM</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab 2: Webhooks (original) -->
+      <div id="tab2-content" class="hidden">
+        <div class="grid md:grid-cols-3 gap-6">
+          <div class="glass p-6 rounded-2xl shadow-sm border border-teal-100 flex flex-col h-fit">
+            <h2 class="font-bold text-lg text-teal-900 mb-4">Adicionar Webhook</h2>
+            <form onsubmit="handleAdd(event)" class="flex flex-col gap-4">
+              <div>
+                <label class="block text-xs font-semibold mb-1 text-slate-600">Nome (opcional)</label>
+                <input type="text" id="addName" placeholder="Ex: Zapier" class="w-full px-3 py-2 text-sm rounded border outline-none focus:border-teal-400">
+              </div>
+              <div>
+                <label class="block text-xs font-semibold mb-1 text-slate-600">URL Destino *</label>
+                <input type="url" id="addUrl" placeholder="https://..." required class="w-full px-3 py-2 text-sm rounded border outline-none focus:border-teal-400">
+              </div>
+              <button type="submit" class="btn-teal py-2 rounded font-semibold text-sm mt-2 shadow">Cadastrar</button>
+            </form>
+          </div>
+          <div class="md:col-span-2 glass p-6 rounded-2xl shadow-sm border border-teal-100">
+            <h2 class="font-bold text-lg text-teal-900 mb-4">Destinos Ativos</h2>
+            <div id="webhooksList" class="flex flex-col gap-3"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let token = localStorage.getItem('wh_admin_token');
+    let kommoStatus = {};
+    let kommoPipelines = [];
+    let kommoFields = [];
+
+    function init() {
+      if (token) showDashboard();
+      else showLogin();
+    }
+
+    function showLogin() {
+      document.getElementById('loginSection').classList.remove('hidden');
+      document.getElementById('dashboardSection').classList.add('hidden');
+      document.getElementById('logoutBtn').classList.add('hidden');
+    }
+
+    function showDashboard() {
+      document.getElementById('loginSection').classList.add('hidden');
+      document.getElementById('dashboardSection').classList.remove('hidden');
+      document.getElementById('logoutBtn').classList.remove('hidden');
+      loadWebhooks();
+      loadKommoStatus();
+    }
+
+    function logout() {
+      localStorage.removeItem('wh_admin_token');
+      token = null; showLogin();
+    }
+
+    function switchTab(idx) {
+      if(idx === 1) {
+        document.getElementById('tab1-btn').className = 'px-2 pb-2 tab-active';
+        document.getElementById('tab2-btn').className = 'px-2 pb-2 tab-inactive';
+        document.getElementById('tab1-content').classList.remove('hidden');
+        document.getElementById('tab2-content').classList.add('hidden');
+      } else {
+        document.getElementById('tab2-btn').className = 'px-2 pb-2 tab-active';
+        document.getElementById('tab1-btn').className = 'px-2 pb-2 tab-inactive';
+        document.getElementById('tab2-content').classList.remove('hidden');
+        document.getElementById('tab1-content').classList.add('hidden');
+      }
+    }
+
+    async function apiGet(errText, endpoint) {
+      const res = await fetch(endpoint, { headers: { 'Authorization': `Bearer ${token}` } });
+      if (res.status === 401) { logout(); throw new Error('Sessão expirada'); }
+      if (!res.ok) throw new Error(errText);
+      return res.json();
+    }
+    async function apiPost(endpoint, body) {
+      const res = await fetch(endpoint, { method: 'POST', headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+      if (res.status === 401) { logout(); throw new Error('Sessão expirada'); }
+      return res.json();
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      try {
+        const res = await fetch('/admin/login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ password: document.getElementById('passwordInput').value }) });
+        const data = await res.json();
+        if (res.ok) {
+          token = data.token; localStorage.setItem('wh_admin_token', token);
+          document.getElementById('passwordInput').value = ''; showDashboard();
+        } else {
+          throw new Error(data.error);
+        }
+      } catch (err) {
+        document.getElementById('loginError').innerText = err.message;
+        document.getElementById('loginError').classList.remove('hidden');
+      }
+    }
+
+    // Kommo Logic
+    async function loadKommoStatus() {
+      try {
+        kommoStatus = await apiGet('Erro Kommo', '/admin/kommo/status');
+        document.getElementById('kRedirect').innerText = kommoStatus.redirect_uri;
+
+        if (kommoStatus.authorized) {
+          document.getElementById('kStatus').className = 'text-green-600 font-bold';
+          document.getElementById('kStatus').innerText = 'Online (' + kommoStatus.domain + ')';
+          document.getElementById('kAuthBtn').classList.add('hidden');
+          document.getElementById('kRefreshBtn').classList.remove('hidden');
+          document.getElementById('kommoConfigBox').classList.remove('hidden');
+          await loadKommoDropdowns();
+        } else {
+          document.getElementById('kStatus').className = 'text-red-500 font-bold';
+          document.getElementById('kStatus').innerText = 'Necessita Autenticação';
+          document.getElementById('kAuthBtn').classList.remove('hidden');
+          document.getElementById('kRefreshBtn').classList.add('hidden');
+          document.getElementById('kommoConfigBox').classList.add('hidden');
+        }
+      } catch (err) { console.error(err); }
+    }
+
+    function authorizeKommo() {
+      if(!kommoStatus.client_id) return alert('CLIENT_ID não encontrado no painel.');
+      const url = `https://www.kommo.com/oauth?client_id=${kommoStatus.client_id}&state=my_state&mode=popup`;
+      window.open(url, "KommoAuth", "width=800,height=600");
+    }
+
+    async function loadKommoDropdowns() {
+      try {
+        kommoPipelines = await apiGet('Erro Pipelines', '/admin/kommo/pipelines');
+        kommoFields = await apiGet('Erro Fields', '/admin/kommo/fields');
+        
+        let pHtml = '<option value="">-- Selecione o Funil --</option>';
+        kommoPipelines.forEach(p => pHtml += `<option value="${p.id}">${p.name}</option>`);
+        document.getElementById('kPipeline').innerHTML = pHtml;
+
+        let fHtml = '<option value="">-- Ignorar Campo --</option>';
+        if (kommoFields.leads && kommoFields.leads.length > 0) {
+          fHtml += '<optgroup label="Campos de Lead (Negócio)">';
+          kommoFields.leads.forEach(f => fHtml += `<option value="lead_${f.id}">${f.name}</option>`);
+          fHtml += '</optgroup>';
+        }
+        if (kommoFields.contacts && kommoFields.contacts.length > 0) {
+          fHtml += '<optgroup label="Campos de Contato (Pessoa)">';
+          kommoFields.contacts.forEach(f => fHtml += `<option value="contact_${f.id}">${f.name}</option>`);
+          fHtml += '</optgroup>';
+        }
+
+        document.getElementById('kFieldPhone').innerHTML = fHtml;
+        document.getElementById('kFieldEmail').innerHTML = fHtml;
+        document.getElementById('kFieldMsg').innerHTML = fHtml;
+
+        // Restore config
+        if(kommoStatus.config) {
+          const cfg = kommoStatus.config;
+          if(cfg.pipeline_id) {
+            document.getElementById('kPipeline').value = cfg.pipeline_id;
+            updateStages();
+            setTimeout(() => document.getElementById('kStage').value = cfg.status_id, 100);
+          }
+          if(cfg.field_phone) document.getElementById('kFieldPhone').value = cfg.field_phone;
+          if(cfg.field_email) document.getElementById('kFieldEmail').value = cfg.field_email;
+          if(cfg.field_message) document.getElementById('kFieldMsg').value = cfg.field_message;
+        }
+
+      } catch (err) { console.error('Erro ao baixar listas kommo', err); }
+    }
+
+    function updateStages() {
+      const pid = parseInt(document.getElementById('kPipeline').value);
+      const pipe = kommoPipelines.find(x => x.id === pid);
+      let sHtml = '<option value="">-- Selecione a Etapa --</option>';
+      if(pipe && pipe._embedded && pipe._embedded.statuses) {
+        pipe._embedded.statuses.forEach(s => sHtml += `<option value="${s.id}">${s.name}</option>`);
+      }
+      document.getElementById('kStage').innerHTML = sHtml;
+    }
+
+    async function saveKommoConfig() {
+      const cfg = {
+        pipeline_id: document.getElementById('kPipeline').value,
+        status_id: document.getElementById('kStage').value,
+        field_phone: document.getElementById('kFieldPhone').value,
+        field_email: document.getElementById('kFieldEmail').value,
+        field_message: document.getElementById('kFieldMsg').value
+      };
+      if(!cfg.pipeline_id || !cfg.status_id) return alert('Você deve selecionar Funil e Etapa.');
+      
+      try {
+        await apiPost('/admin/kommo/config', cfg);
+        alert('Configurações salvas com sucesso! Cadastros futuros cairão diretamente no funil.');
+      } catch(err) {
+        alert(err.message);
+      }
+    }
+
+    // Webhooks Logic
+    async function loadWebhooks() {
+      const wList = document.getElementById('webhooksList');
+      try {
+        const webhooks = await apiGet('Erro', '/admin/webhooks');
+        if (!webhooks.length) return wList.innerHTML = '<p class="text-sm text-slate-500 italic">Nenhum extra.</p>';
+        wList.innerHTML = webhooks.map(w => `
+          <div class="flex items-center justify-between p-3 bg-white rounded border border-teal-50 shadow-sm">
+            <div class="overflow-hidden">
+              <p class="font-bold text-sm text-slate-800">${w.name || 'Sem nome'}</p>
+              <p class="text-xs text-slate-400 font-mono">${w.url}</p>
+            </div>
+            <button onclick="apiGet('', '/admin/webhooks/${w.id}', {method:'DELETE'}).then(loadWebhooks)" class="text-red-400 p-2">Excluir</button>
+          </div>
+        `).join('');
+      } catch(err) {}
+    }
+    async function handleAdd(e) {
+      e.preventDefault();
+      try {
+        await apiPost('/admin/webhooks', { name: document.getElementById('addName').value, url: document.getElementById('addUrl').value });
+        loadWebhooks(); e.target.reset();
+      } catch(err) { alert(err.message); }
+    }
+
+    init();
+  </script>
+</body>
+</html>
