@@ -2,11 +2,11 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { CheckCircle2, ArrowLeft, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { CheckCircle2, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-const WEBHOOK_SERVER_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL || "http://localhost:3000";
+const WEBHOOK_SERVER_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL || "https://api.elysiumodontologia.com.br";
 
 export default function ContatoPage() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
@@ -60,175 +60,184 @@ export default function ContatoPage() {
         }}
       />
 
-      <div className="relative z-10 max-w-4xl mx-auto px-6 py-10 lg:py-16">
+      <div className="relative z-10 max-w-6xl mx-auto px-6 py-10 lg:py-16">
         {/* Topo — logo + voltar */}
-        <div className="flex flex-col items-center gap-8 mb-16">
+        <div className="flex items-center justify-between mb-12">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 font-body text-sm text-white/50 hover:text-white transition-colors"
+            className="inline-flex items-center gap-2 font-body text-sm text-white/60 hover:text-white transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            Voltar para a página principal
+            Voltar
           </Link>
 
           <Image
             src="/Logos/logo-light-clean.png"
             alt="Elysium Odontologia"
-            width={240}
-            height={56}
-            className="w-auto h-12 lg:h-14"
+            width={200}
+            height={47}
+            style={{ display: "block" }}
             priority
           />
+
+          {/* Espaçador para centralizar a logo */}
+          <div className="w-16" />
         </div>
 
-        {/* Conteúdo Centralizado */}
-        <div className="flex flex-col items-center">
+        {/* Grid principal */}
+        <div className="grid lg:grid-cols-2 gap-14 items-start">
+          {/* Esquerda — texto */}
           <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            initial={{ opacity: 0, x: -30 }}
+            animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
           >
             <p
-              className="text-xs font-body font-semibold uppercase tracking-[0.25em] mb-4"
+              className="text-xs font-body font-semibold uppercase tracking-[0.22em] mb-4"
               style={{ color: "#6dd3ce" }}
             >
-              Exclusividade & Estética
+              Entre em Contato
             </p>
             <h1
-              className="font-heading font-bold text-white mb-6"
-              style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }}
+              className="font-heading font-bold text-white mb-5"
+              style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
             >
               Agende sua avaliação{" "}
               <em className="not-italic" style={{ color: "#41c1bb" }}>
-                personalizada
+                gratuita
               </em>
             </h1>
-            <p className="font-body text-white/70 text-base leading-relaxed max-w-2xl mx-auto">
-              Preencha o formulário abaixo e nossa equipe entrará em contato em até{" "}
-              <strong className="text-white">24 horas</strong> para agendar seu horário com nossos especialistas.
+            <p className="font-body text-white/70 text-sm leading-relaxed mb-10 max-w-md">
+              Preencha o formulário e nossa equipe entrará em contato em até{" "}
+              <strong className="text-white/90">24 horas</strong> para confirmar
+              seu agendamento personalizado.
             </p>
+
+            <div className="flex flex-col gap-6">
+               <div className="p-6 rounded-2xl glass-teal border border-white/10">
+                  <p className="text-sm font-body text-white/80 leading-relaxed">
+                    Estamos prontos para transformar seu sorriso com tecnologia de ponta e as melhores lentes dentárias do mercado. Aguardamos sua mensagem.
+                  </p>
+               </div>
+            </div>
           </motion.div>
 
-          {/* Formulário */}
+          {/* Direita — Formulário */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.98 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="glass rounded-[32px] p-8 lg:p-12 w-full max-w-xl"
-            style={{ boxShadow: "0 32px 80px rgba(0,0,0,0.3)" }}
+            initial={{ opacity: 0, x: 30 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.6, delay: 0.15 }}
+            className="glass rounded-3xl p-8 lg:p-10"
+            style={{ boxShadow: "0 24px 64px rgba(0,0,0,0.2)" }}
           >
             {sent ? (
-              <div className="flex flex-col items-center justify-center gap-6 py-12 text-center">
-                <div className="w-20 h-20 rounded-full flex items-center justify-center bg-teal/10 border border-teal/20 mb-2">
-                  <CheckCircle2 className="w-10 h-10" style={{ color: "#41c1bb" }} />
-                </div>
-                <h2 className="font-heading text-white text-3xl font-semibold">
-                  Solicitação Recebida
+              <div className="flex flex-col items-center justify-center gap-5 py-12 text-center">
+                <CheckCircle2 className="w-16 h-16" style={{ color: "#41c1bb" }} />
+                <h2 className="font-heading text-white text-2xl font-semibold">
+                  Solicitação enviada!
                 </h2>
-                <p className="font-body text-white/65 text-base max-w-xs mx-auto">
-                  Agradecemos a confiança. Em breve entraremos em contato para confirmar sua avaliação exclusiva.
+                <p className="font-body text-white/65 text-sm max-w-xs">
+                  Em breve nossa equipe entrará em contato para confirmar seu
+                  agendamento. Obrigado!
                 </p>
                 <Link
                   href="/"
-                  className="btn-teal mt-6 px-10 py-4 text-sm font-semibold inline-block"
+                  className="btn-teal mt-4 px-8 py-3 text-sm font-semibold inline-block"
                 >
                   Voltar ao início
                 </Link>
               </div>
             ) : (
-              <form id="contact-form" onSubmit={handleSubmit} className="flex flex-col gap-6">
+              <form id="contact-form" onSubmit={handleSubmit} className="flex flex-col gap-5">
                 <div>
-                  <h2 className="font-heading text-white text-2xl font-semibold mb-2 text-center">
-                    Inicie sua transformação
+                  <h2 className="font-heading text-white text-2xl font-semibold mb-1">
+                    Solicite sua avaliação
                   </h2>
-                  <div className="w-12 h-1 bg-teal mx-auto rounded-full mb-6 opacity-40" />
+                  <p className="font-body text-white/50 text-xs">
+                    Todos os campos marcados com * são obrigatórios.
+                  </p>
                 </div>
 
                 {/* Name */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="f-name" className="text-[10px] font-body font-bold text-white/40 uppercase tracking-widest ml-1">
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="f-name" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
                     Nome completo *
                   </label>
                   <input
                     id="f-name"
                     type="text"
                     required
-                    placeholder="Como gostaria de ser chamado(a)?"
+                    placeholder="Seu nome"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full rounded-2xl px-5 py-4 text-sm font-body bg-white/[0.05] text-white placeholder-white/20 outline-none border border-white/10 focus:border-[#41c1bb] focus:bg-white/[0.08] transition-all"
+                    className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#41c1bb] transition-colors"
                   />
                 </div>
 
-                {/* WhatsApp */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="f-phone" className="text-[10px] font-body font-bold text-white/40 uppercase tracking-widest ml-1">
-                    WhatsApp para contato *
-                  </label>
-                  <input
-                    id="f-phone"
-                    type="tel"
-                    required
-                    placeholder="(00) 00000-0000"
-                    value={form.phone}
-                    onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                    className="w-full rounded-2xl px-5 py-4 text-sm font-body bg-white/[0.05] text-white placeholder-white/20 outline-none border border-white/10 focus:border-[#41c1bb] focus:bg-white/[0.08] transition-all"
-                  />
-                </div>
-
-                {/* E-mail */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="f-email" className="text-[10px] font-body font-bold text-white/40 uppercase tracking-widest ml-1">
-                    E-mail (opcional)
-                  </label>
-                  <input
-                    id="f-email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    value={form.email}
-                    onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    className="w-full rounded-2xl px-5 py-4 text-sm font-body bg-white/[0.05] text-white placeholder-white/20 outline-none border border-white/10 focus:border-[#41c1bb] focus:bg-white/[0.08] transition-all"
-                  />
+                {/* Phone + email */}
+                <div className="grid sm:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label htmlFor="f-phone" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
+                      WhatsApp *
+                    </label>
+                    <input
+                      id="f-phone"
+                      type="tel"
+                      required
+                      placeholder="(00) 00000-0000"
+                      value={form.phone}
+                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                      className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#41c1bb] transition-colors"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label htmlFor="f-email" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
+                      E-mail
+                    </label>
+                    <input
+                      id="f-email"
+                      type="email"
+                      placeholder="seu@email.com"
+                      value={form.email}
+                      onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#41c1bb] transition-colors"
+                    />
+                  </div>
                 </div>
 
                 {/* Message */}
-                <div className="flex flex-col gap-2">
-                  <label htmlFor="f-message" className="text-[10px] font-body font-bold text-white/40 uppercase tracking-widest ml-1">
-                    Alguma observação?
+                <div className="flex flex-col gap-1.5">
+                  <label htmlFor="f-message" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
+                    Mensagem (opcional)
                   </label>
                   <textarea
                     id="f-message"
                     rows={4}
-                    placeholder="Diga-nos o melhor horário para ligarmos ou tire suas dúvidas..."
+                    placeholder="Conte um pouco sobre seu caso ou a melhor forma de te contatar..."
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full rounded-2xl px-5 py-4 text-sm font-body bg-white/[0.05] text-white placeholder-white/20 outline-none border border-white/10 focus:border-[#41c1bb] focus:bg-white/[0.08] transition-all resize-none"
+                    className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#41c1bb] transition-colors resize-none"
                   />
                 </div>
 
                 {/* Error */}
                 {error && (
-                  <motion.p 
-                    initial={{ opacity: 0, x: -10 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className="text-red-300 text-xs font-body bg-red-900/30 rounded-xl px-4 py-3 border border-red-500/20"
-                  >
+                  <p className="text-red-300 text-xs font-body bg-red-900/20 rounded-lg px-4 py-2">
                     ⚠ {error}
-                  </motion.p>
+                  </p>
                 )}
 
                 <button
                   id="contact-submit"
                   type="submit"
                   disabled={loading}
-                  className="btn-teal py-5 text-sm font-bold mt-4 disabled:opacity-60 disabled:cursor-not-allowed w-full shadow-2xl shadow-teal/30"
+                  className="btn-teal py-4 text-sm font-semibold mt-1 disabled:opacity-60 disabled:cursor-not-allowed w-full"
                 >
-                  {loading ? "Processando..." : "Solicitar Agendamento Individual →"}
+                  {loading ? "Enviando..." : "Agendar avaliação gratuita →"}
                 </button>
 
-                <p className="text-center text-white/25 text-[10px] font-body tracking-wider uppercase mt-2">
-                  Privacidade garantida • Elysium Odontologia
+                <p className="text-center text-white/30 text-xs font-body">
+                  Seus dados são tratados com total sigilo e privacidade.
                 </p>
               </form>
             )}

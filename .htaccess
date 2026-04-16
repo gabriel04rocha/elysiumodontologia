@@ -3,16 +3,18 @@
   RewriteBase /
 
   # Permite acesso à pasta _next e outros arquivos estáticos
+  # Isso garante que o CSS e JS carreguem corretamente
   RewriteCond %{REQUEST_URI} ^/_next/static/.*$ [OR]
   RewriteCond %{REQUEST_URI} ^/assets/.*$ [OR]
   RewriteCond %{REQUEST_URI} ^/Logos/.*$
   RewriteRule ^ - [L]
 
-  # Se o arquivo físico ou diretório não existir, tenta carregar o index.html da pasta correspondente
-  # Isso ajuda com o trailingSlash: true configurado no Next.js
+  # Mapeia URLs sem extensão para arquivos .html
+  # Exemplo: dominio.com/contato -> dominio.com/contato.html
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)/$ $1/index.html [L,QSA]
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^(.*)$ $1.html [L,QSA]
 
   # Força HTTPS se não estiver usando
   RewriteCond %{HTTPS} off
