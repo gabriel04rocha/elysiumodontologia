@@ -1,6 +1,6 @@
 ---
 deployment:
   tasks:
-    - /opt/cpanel/ea-nodejs20/bin/npm install
-    - export NEXT_TELEMETRY_DISABLED=1 && /opt/cpanel/ea-nodejs20/bin/npm run build
-    - /bin/cp -R out/* $HOME/public_html/
+    - npm install --no-audit --no-fund
+    - npx next build
+    - cp -a out/. ../../public_html/
