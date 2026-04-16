@@ -2,26 +2,34 @@
   RewriteEngine On
   RewriteBase /
 
-  # Permite acesso à pasta _next e outros arquivos estáticos
-  # Isso garante que o CSS e JS carreguem corretamente
-  RewriteCond %{REQUEST_URI} ^/_next/static/.*$ [OR]
-  RewriteCond %{REQUEST_URI} ^/assets/.*$ [OR]
-  RewriteCond %{REQUEST_URI} ^/Logos/.*$
+  # 1. Permite acesso total à pasta _next e outros ativos
+  # O cPanel às vezes bloqueia pastas com underscore, isso força a permissão
+  RewriteCond %{REQUEST_URI} ^/_next/.*$
   RewriteRule ^ - [L]
 
-  # Mapeia URLs sem extensão para arquivos .html
-  # Exemplo: dominio.com/contato -> dominio.com/contato.html
+  # 2. Garante que imagens e logos sejam servidos sem passar pelas regras de roteamento
+  RewriteCond %{REQUEST_URI} ^/Logos/.*$ [OR]
+  RewriteCond %{REQUEST_URI} ^/favicon.ico$
+  RewriteRule ^ - [L]
+
+  # 3. Trata o roteamento de pastas para o Next.js (trailingSlash: true)
+  # Se o usuário acessar dominio.com/contato, redireciona para dominio.com/contato/ com barra
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_URI} !index.html$
+  RewriteCond %{REQUEST_URI} !/$
+  RewriteRule ^(.*)$ $1/ [R=301,L]
+
+  # Se o arquivo físico ou diretório não existir, tenta carregar o index.html da pasta correspondente
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteCond %{REQUEST_FILENAME}.html -f
-  RewriteRule ^(.*)$ $1.html [L,QSA]
+  RewriteRule ^(.*)/$ $1/index.html [L,QSA]
 
-  # Força HTTPS se não estiver usando
+  # 4. Força HTTPS
   RewriteCond %{HTTPS} off
   RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 </IfModule>
 
-# Cache headers para performance
+# Cache e Performance
 <IfModule mod_expires.c>
   ExpiresActive On
   ExpiresDefault "access plus 1 year"
