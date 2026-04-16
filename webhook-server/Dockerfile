@@ -1,6 +1,6 @@
 FROM node:20-slim
 
-WORKDIR /
+WORKDIR /app
 
 # Instala dependências de build se necessário (sharp, etc)
 # RUN apt-get update && apt-get install -y python3 make g++
