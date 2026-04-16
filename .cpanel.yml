@@ -2,5 +2,5 @@
 deployment:
   tasks:
     - npm install --no-audit --no-fund
-    - npx next build
-    - cp -a out/. ../../public_html/
+    - npm run build
+    - cp -r out/. ../../public_html/
