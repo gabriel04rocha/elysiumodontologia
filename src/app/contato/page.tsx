@@ -6,7 +6,7 @@ import { CheckCircle2, ArrowLeft, Phone, Mail, MapPin, Clock } from "lucide-reac
 import Image from "next/image";
 import Link from "next/link";
 
-const WEBHOOK_SERVER_URL = process.env.NEXT_PUBLIC_WEBHOOK_SERVER_URL || "http://localhost:3001";
+const WEBHOOK_SERVER_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL || "http://localhost:3000";
 
 export default function ContatoPage() {
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });

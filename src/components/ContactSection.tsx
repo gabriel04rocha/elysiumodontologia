@@ -37,7 +37,8 @@ export function ContactSection() {
     setLoading(true);
     
     try {
-      const webhookUrl = process.env.NEXT_PUBLIC_WEBHOOK_URL || "http://localhost:3001/submit";
+      // URL do webhook vinda do .env
+      const webhookUrl = `${process.env.NEXT_PUBLIC_WEBHOOK_URL}/submit`;
       
       const res = await fetch(webhookUrl, {
         method: "POST",
