@@ -45,12 +45,27 @@ app.use(
 // ── Base URL Middleware ──
 // Remove '/api' caso o Passenger/Proxy ignore o rewrite nativo
 app.use((req, res, next) => {
+  const originalUrl = req.url;
   if (req.url.startsWith('/api/')) {
-    req.url = req.url.substring(4);
+    req.url = req.url.replace('/api/', '/');
   } else if (req.url === '/api') {
     req.url = '/';
   }
+  
+  if (originalUrl !== req.url) {
+    console.log(`Path rewritten: ${originalUrl} -> ${req.url}`);
+  }
   next();
+});
+
+// Rota de Diagnóstico para confirmar versão
+app.get("/version", (req, res) => {
+  res.json({ 
+    version: "1.0.2-prefix-fix", 
+    timestamp: new Date().toISOString(),
+    url: req.url,
+    originalUrl: req.originalUrl || "n/a"
+  });
 });
 // ── Rate limiter ──
 const submitLimiter = rateLimit({
