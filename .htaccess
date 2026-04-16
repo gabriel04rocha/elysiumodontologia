@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Permite acesso à pasta _next (Next.js assets)
+  # Algumas configurações de servidor bloqueiam pastas iniciadas com ponto ou underline
+  RewriteRule ^_next/(.*)$ _next/$1 [L]
+
+  # Se o arquivo físico ou diretório não existir, tenta carregar o index.html da pasta correspondente
+  # Isso ajuda com o trailingSlash: true configurado no Next.js
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.*)/$ $1/index.html [L]
+
+  # Força HTTPS se não estiver usando
+  RewriteCond %{HTTPS} off
+  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+</IfModule>
+
+# Cache headers para performance
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresDefault "access plus 1 year"
+</IfModule>
