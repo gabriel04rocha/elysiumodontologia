@@ -28,6 +28,9 @@ db.defaults({
 
 // ── App ──
 const app = express();
+// Habilita confiança no proxy (Dokploy/Traefik) para detectar HTTPS corretamente
+app.set('trust proxy', 1);
+
 // No Docker (Dokploy), usamos a 3000 como padrão interno.
 const PORT = process.env.PORT || 3000;
 const JWT_SECRET = process.env.JWT_SECRET || "changeme";
@@ -290,7 +293,7 @@ app.get("/admin/submissions", requireAuth, (req, res) => {
 app.get("/admin/kommo/status", requireAuth, (req, res) => {
   const auth = db.get("kommoAuth").value();
   const config = db.get("kommoConfig").value();
-  const redirect_uri = `http://${req.headers.host}/admin/kommo/callback`;
+  const redirect_uri = `${req.protocol}://${req.headers.host}/admin/kommo/callback`;
   
   res.json({ 
      authorized: !!(auth && auth.access_token), 
@@ -305,7 +308,7 @@ app.get("/admin/kommo/callback", async (req, res) => {
   const { code, referer, client_id } = req.query;
   if(!code || !referer) return res.send("Erro: callback incorreto do Kommo.");
   
-  const redirect_uri = `http://${req.headers.host}/admin/kommo/callback`;
+  const redirect_uri = `${req.protocol}://${req.headers.host}/admin/kommo/callback`;
   
   try {
      const tokens = await axios.post(`https://${referer}/oauth2/access_token`, {
