@@ -42,3 +42,5 @@ next-env.d.ts
 
 # webhook server
 /webhook-server/db.json
+
+site-elysium.zip

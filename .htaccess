@@ -2,15 +2,17 @@
   RewriteEngine On
   RewriteBase /
 
-  # Permite acesso à pasta _next (Next.js assets)
-  # Algumas configurações de servidor bloqueiam pastas iniciadas com ponto ou underline
-  RewriteRule ^_next/(.*)$ _next/$1 [L]
+  # Permite acesso à pasta _next e outros arquivos estáticos
+  RewriteCond %{REQUEST_URI} ^/_next/static/.*$ [OR]
+  RewriteCond %{REQUEST_URI} ^/assets/.*$ [OR]
+  RewriteCond %{REQUEST_URI} ^/Logos/.*$
+  RewriteRule ^ - [L]
 
   # Se o arquivo físico ou diretório não existir, tenta carregar o index.html da pasta correspondente
   # Isso ajuda com o trailingSlash: true configurado no Next.js
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)/$ $1/index.html [L]
+  RewriteRule ^(.*)/$ $1/index.html [L,QSA]
 
   # Força HTTPS se não estiver usando
   RewriteCond %{HTTPS} off
