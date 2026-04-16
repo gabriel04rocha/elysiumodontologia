@@ -4,5 +4,4 @@ deployment:
     - export PATH=/opt/cpanel/ea-nodejs20/bin:$PATH
     - npm install
     - npm run build
-    - cp -R out/* ./
-    - cd webhook-server && npm install
+    - /bin/cp -R out/* $HOME/public_html/
