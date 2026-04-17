@@ -11,17 +11,15 @@
   --color-background:            var(--background);
   --color-foreground:            var(--foreground);
   --font-sans:                   var(--font-inter);
-  --font-heading:                var(--font-cormorant);
+  --font-heading:                var(--font-cinzel);
   --font-mono:                   var(--font-geist-mono);
 
   /* ── Brand tokens ── */
-  --color-teal:                  var(--teal);          /* #41c1bb */
-  --color-teal-light:            var(--teal-light);
-  --color-teal-lighter:          var(--teal-lighter);
-  --color-teal-dark:             var(--teal-dark);
-  --color-slate:                 var(--slate);          /* #375c6d */
-  --color-slate-light:           var(--slate-light);
-  --color-slate-dark:            var(--slate-dark);
+  --color-gold:                  var(--gold-mid);
+  --color-gold-light:            var(--gold-light);
+  --color-gold-dark:             var(--gold-dark);
+  --color-deep-green:            var(--deep-green);
+  --color-deep-green-dark:       var(--deep-green-dark);
 
   /* ── ShadCN semantic ── */
   --color-primary:               var(--primary);
@@ -52,38 +50,37 @@
 
 :root {
   /* ── Brand raw values ── */
-  /* #41c1bb → oklch(0.73 0.089 192)  */
-  /* #375c6d → oklch(0.41 0.056 213)  */
-
-  --teal:          #41c1bb;
-  --teal-light:    #6dd3ce;   /* +20% lightness */
-  --teal-lighter:  #d0f2f1;   /* very pale teal for backgrounds */
-  --teal-dark:     #2d9f99;   /* –15% lightness */
-  --slate:         #375c6d;
-  --slate-light:   #4f7f94;
-  --slate-dark:    #223d4a;
-  --white:         #ffffff;
+  --deep-green:      #0E2A26;
+  --deep-green-dark: #071715;
+  --gold-light:      #F3E6C2;
+  --gold-mid:        #CBB27A;
+  --gold-dark:       #8E6F3A;
+  --white:           #ffffff;
 
   /* ── ShadCN tokens ── */
-  --background:             #f7fefe;   /* near-white with teal hint */
-  --foreground:             #1a2f38;   /* very dark slate */
-  --card:                   #ffffff;
-  --card-foreground:        #1a2f38;
-  --popover:                #ffffff;
-  --popover-foreground:     #1a2f38;
-  --primary:                #41c1bb;
-  --primary-foreground:     #ffffff;
-  --secondary:              #375c6d;
-  --secondary-foreground:   #ffffff;
-  --muted:                  #eaf6f6;
-  --muted-foreground:       #4f7f94;
-  --accent:                 #d0f2f1;
-  --accent-foreground:      #223d4a;
+  --background:             #0E2A26;   /* Deep Green base */
+  --foreground:             #F3E6C2;   /* Light Gold for readable text */
+  --card:                   #123531;
+  --card-foreground:        #F3E6C2;
+  --popover:                #123531;
+  --popover-foreground:     #F3E6C2;
+  --primary:                #CBB27A;   /* Mid Gold as primary */
+  --primary-foreground:     #0E2A26;
+  --secondary:              #123531;
+  --secondary-foreground:   #F3E6C2;
+  --muted:                  #123531;
+  --muted-foreground:       #8E6F3A;
+  --accent:                 #CBB27A;
+  --accent-foreground:      #0E2A26;
   --destructive:            oklch(0.577 0.245 27.325);
-  --border:                 #c9e8e7;
-  --input:                  #ddf0ef;
-  --ring:                   #41c1bb;
+  --border:                 rgba(203, 178, 122, 0.2);
+  --input:                  rgba(203, 178, 122, 0.1);
+  --ring:                   #CBB27A;
   --radius:                 0.75rem;
+
+  /* Font mappings */
+  --font-inter:  'Inter', sans-serif;
+  --font-cinzel: 'Cinzel', serif;
 }
 
 /* ─── Base ─────────────────────────────────────────── */
@@ -97,7 +94,7 @@
 
   html {
     scroll-behavior: smooth;
-    font-family: 'Inter', sans-serif;
+    font-family: var(--font-inter);
   }
 
   body {
@@ -107,19 +104,21 @@
   }
 
   h1, h2, h3, h4 {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: var(--font-cinzel);
     line-height: 1.15;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
   }
 }
 
 /* ─── Utilities ─────────────────────────────────────── */
 @layer utilities {
-  .font-heading { font-family: 'Cormorant Garamond', serif; }
-  .font-body    { font-family: 'Inter', sans-serif; }
+  .font-heading { font-family: var(--font-cinzel); }
+  .font-body    { font-family: var(--font-inter); }
 
-  /* ── Teal gradient text ── */
-  .gradient-teal {
-    background: linear-gradient(135deg, var(--slate) 0%, var(--teal) 55%, var(--teal-light) 100%);
+  /* ── Gold gradient text ── */
+  .gradient-gold {
+    background: linear-gradient(-45deg, var(--gold-dark) 0%, var(--gold-mid) 50%, var(--gold-light) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -127,30 +126,30 @@
 
   /* ── Backgrounds ── */
   .bg-hero {
-    background: linear-gradient(135deg, var(--slate-dark) 0%, var(--slate) 45%, var(--teal-dark) 100%);
+    background: radial-gradient(circle at top right, #123531 0%, #0E2A26 60%, var(--deep-green-dark) 100%);
   }
 
-  .bg-teal-gradient {
-    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
+  .bg-gold-gradient {
+    background: linear-gradient(-45deg, var(--gold-dark) 0%, var(--gold-mid) 50%, var(--gold-light) 100%);
   }
 
-  .bg-slate-gradient {
-    background: linear-gradient(135deg, var(--slate-dark) 0%, var(--slate) 100%);
+  .bg-deep-green-gradient {
+    background: linear-gradient(135deg, var(--deep-green-dark) 0%, var(--deep-green) 100%);
   }
 
   /* ── Glassmorphism ── */
   .glass {
-    background: rgba(255, 255, 255, 0.10);
+    background: rgba(14, 42, 38, 0.65);
     backdrop-filter: blur(18px) saturate(180%);
     -webkit-backdrop-filter: blur(18px) saturate(180%);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(203, 178, 122, 0.15);
   }
 
-  .glass-teal {
-    background: rgba(65, 193, 187, 0.12);
+  .glass-gold {
+    background: rgba(203, 178, 122, 0.08);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
-    border: 1px solid rgba(65, 193, 187, 0.25);
+    border: 1px solid rgba(203, 178, 122, 0.2);
   }
 
   /* ── Section spacing ── */
@@ -162,12 +161,12 @@
     .section-pad { padding-top: 7rem; padding-bottom: 7rem; }
   }
 
-  /* ── Gold / teal divider ── */
-  .divider-teal {
+  /* ── Gold divider ── */
+  .divider-gold {
     display: block;
     width: 56px;
     height: 3px;
-    background: linear-gradient(90deg, var(--teal-dark), var(--teal-light));
+    background: linear-gradient(90deg, var(--gold-dark), var(--gold-light));
     border-radius: 9999px;
   }
 
@@ -178,36 +177,40 @@
   }
   .hover-lift:hover {
     transform: translateY(-6px);
-    box-shadow: 0 24px 48px rgba(55, 92, 109, 0.16);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.4);
   }
 
-  /* ── Teal glow button ── */
-  .btn-teal {
-    background: linear-gradient(135deg, var(--teal-dark) 0%, var(--teal) 100%);
-    color: #fff;
-    font-family: 'Inter', sans-serif;
-    font-weight: 600;
+  /* ── Gold glow button ── */
+  .btn-gold {
+    background: linear-gradient(-45deg, var(--gold-dark) 0%, var(--gold-mid) 50%, var(--gold-light) 100%);
+    color: var(--deep-green);
+    font-family: var(--font-inter);
+    font-weight: 700;
     border-radius: 9999px;
     transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 8px 24px rgba(65, 193, 187, 0.35);
+    box-shadow: 0 8px 24px rgba(203, 178, 122, 0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
   }
-  .btn-teal:hover {
+  .btn-gold:hover {
     opacity: 0.92;
     transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(65, 193, 187, 0.45);
+    box-shadow: 0 12px 32px rgba(203, 178, 122, 0.35);
   }
 
-  .btn-outline-white {
-    border: 2px solid rgba(255,255,255,0.55);
-    color: #fff;
+  .btn-outline-gold {
+    border: 2px solid rgba(203, 178, 122, 0.4);
+    color: var(--gold-light);
     border-radius: 9999px;
-    font-family: 'Inter', sans-serif;
-    font-weight: 500;
+    font-family: var(--font-inter);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
     transition: background 0.2s, border-color 0.2s;
   }
-  .btn-outline-white:hover {
-    background: rgba(255,255,255,0.12);
-    border-color: rgba(255,255,255,0.9);
+  .btn-outline-gold:hover {
+    background: rgba(203, 178, 122, 0.1);
+    border-color: rgba(203, 178, 122, 0.8);
   }
 
   /* ── Noise texture overlay ── */

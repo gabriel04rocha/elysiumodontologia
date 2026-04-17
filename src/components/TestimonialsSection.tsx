@@ -40,10 +40,10 @@ const testimonials = [
 ];
 
 const avatarColors = [
-  "linear-gradient(135deg, #2d9f99, #41c1bb)",
-  "linear-gradient(135deg, #223d4a, #375c6d)",
-  "linear-gradient(135deg, #375c6d, #4f7f94)",
-  "linear-gradient(135deg, #41c1bb, #6dd3ce)",
+  "linear-gradient(135deg, #8E6F3A, #CBB27A)",
+  "linear-gradient(135deg, #CBB27A, #F3E6C2)",
+  "linear-gradient(135deg, #8E6F3A, #F3E6C2)",
+  "linear-gradient(135deg, #CBB27A, #8E6F3A)",
 ];
 
 function TestimonialCard({
@@ -64,14 +64,14 @@ function TestimonialCard({
       id={`testimonial-${testimonial.id}`}
       className="hover-lift bg-white rounded-3xl p-8 flex flex-col gap-5 relative"
       style={{
-        boxShadow: "0 8px 32px rgba(55,92,109,0.1)",
-        border: "1px solid #e4f4f3",
+        boxShadow: "0 12px 32px rgba(203, 178, 122, 0.12)",
+        border: "1px solid rgba(203, 178, 122, 0.15)",
       }}
     >
       {/* Quote icon */}
       <Quote
         className="w-8 h-8 absolute top-6 right-6 opacity-10"
-        style={{ color: "#41c1bb" }}
+        style={{ color: "#CBB27A" }}
       />
 
       {/* Stars */}
@@ -80,18 +80,18 @@ function TestimonialCard({
           <Star
             key={i}
             className="w-4 h-4 fill-current"
-            style={{ color: "#41c1bb" }}
+            style={{ color: "#CBB27A" }}
           />
         ))}
       </div>
 
       {/* Text */}
-      <p className="font-body text-sm text-slate-600 leading-relaxed flex-1">
+      <p className="font-body text-sm text-[#2D4D59]/80 leading-relaxed flex-1">
         &ldquo;{testimonial.text}&rdquo;
       </p>
 
       {/* Author */}
-      <div className="flex items-center gap-3 pt-4 border-t" style={{ borderColor: "#e4f4f3" }}>
+      <div className="flex items-center gap-3 pt-4 border-t" style={{ borderColor: "rgba(142, 111, 58, 0.1)" }}>
         <div
           className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
           style={{ background: avatarColors[index % avatarColors.length] }}
@@ -101,10 +101,10 @@ function TestimonialCard({
           </span>
         </div>
         <div>
-          <p className="font-body font-semibold text-sm" style={{ color: "#1a2f38" }}>
+          <p className="font-body font-bold text-sm text-[#0E2A26]">
             {testimonial.name}
           </p>
-          <p className="font-body text-xs text-slate-400">{testimonial.role}</p>
+          <p className="font-body text-xs text-[#2D4D59]/60">{testimonial.role}</p>
         </div>
       </div>
     </motion.div>
@@ -119,14 +119,14 @@ export function TestimonialsSection() {
       id="depoimentos"
       className="section-pad relative overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #f7fefe 0%, #eaf6f6 100%)",
+        background: "#FAF9F6",
       }}
     >
       {/* Blob */}
       <div
         className="absolute left-[-100px] bottom-[-100px] w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(55,92,109,0.1) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(203, 178, 122, 0.08) 0%, transparent 70%)",
           filter: "blur(50px)",
         }}
       />
@@ -141,22 +141,22 @@ export function TestimonialsSection() {
           className="text-center mb-16"
         >
           <p
-            className="text-xs font-body font-semibold uppercase tracking-[0.22em] mb-4"
-            style={{ color: "#41c1bb" }}
+            className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
+            style={{ color: "#8E6F3A" }}
           >
             Depoimentos
           </p>
           <h2
-            className="font-heading font-bold mb-6"
-            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#1a2f38" }}
+            className="font-heading font-bold mb-6 text-[#0E2A26]"
+            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
           >
             O que nossos pacientes
             <br />
-            <em className="not-italic" style={{ color: "#375c6d" }}>
+            <em className="not-italic" style={{ color: "#8E6F3A" }}>
               estão dizendo
             </em>
           </h2>
-          <span className="divider-teal mx-auto block" />
+          <span className="divider-gold mx-auto block" />
         </motion.div>
 
         {/* Grid */}

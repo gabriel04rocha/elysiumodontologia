@@ -42,13 +42,13 @@ export default function ContatoPage() {
   return (
     <div
       className="min-h-screen"
-      style={{ background: "linear-gradient(135deg, #223d4a 0%, #375c6d 50%, #2d9f99 100%)" }}
+      style={{ background: "linear-gradient(135deg, #071715 0%, #0E2A26 50%, #123531 100%)" }}
     >
       {/* Blobs ambiente */}
       <div
         className="fixed top-0 right-0 w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(65,193,187,0.18) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(203, 178, 122, 0.18) 0%, transparent 70%)",
           filter: "blur(80px)",
         }}
       />
@@ -72,10 +72,10 @@ export default function ContatoPage() {
           </Link>
 
           <Image
-            src="/Logos/logo-light-clean.png"
+            src="/Logos/logo-gold.png"
             alt="Elysium Odontologia"
-            width={200}
-            height={47}
+            width={180}
+            height={42}
             style={{ display: "block" }}
             priority
           />
@@ -93,8 +93,8 @@ export default function ContatoPage() {
             transition={{ duration: 0.6 }}
           >
             <p
-              className="text-xs font-body font-semibold uppercase tracking-[0.22em] mb-4"
-              style={{ color: "#6dd3ce" }}
+              className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
+              style={{ color: "#F3E6C2" }}
             >
               Entre em Contato
             </p>
@@ -103,7 +103,7 @@ export default function ContatoPage() {
               style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
             >
               Agende sua avaliação{" "}
-              <em className="not-italic" style={{ color: "#41c1bb" }}>
+              <em className="not-italic" style={{ color: "#CBB27A" }}>
                 gratuita
               </em>
             </h1>
@@ -114,7 +114,7 @@ export default function ContatoPage() {
             </p>
 
             <div className="flex flex-col gap-6">
-               <div className="p-6 rounded-2xl glass-teal border border-white/10">
+               <div className="p-6 rounded-2xl glass-gold border border-white/10">
                   <p className="text-sm font-body text-white/80 leading-relaxed">
                     Estamos prontos para transformar seu sorriso com tecnologia de ponta e as melhores lentes dentárias do mercado. Aguardamos sua mensagem.
                   </p>
@@ -132,7 +132,7 @@ export default function ContatoPage() {
           >
             {sent ? (
               <div className="flex flex-col items-center justify-center gap-5 py-12 text-center">
-                <CheckCircle2 className="w-16 h-16" style={{ color: "#41c1bb" }} />
+                <CheckCircle2 className="w-16 h-16" style={{ color: "#CBB27A" }} />
                 <h2 className="font-heading text-white text-2xl font-semibold">
                   Solicitação enviada!
                 </h2>
@@ -142,7 +142,7 @@ export default function ContatoPage() {
                 </p>
                 <Link
                   href="/"
-                  className="btn-teal mt-4 px-8 py-3 text-sm font-semibold inline-block"
+                  className="btn-gold mt-4 px-8 py-3 text-sm font-bold inline-block"
                 >
                   Voltar ao início
                 </Link>
@@ -170,7 +170,7 @@ export default function ContatoPage() {
                     placeholder="Seu nome"
                     value={form.name}
                     onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#41c1bb] transition-colors"
+                    className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors"
                   />
                 </div>
 
@@ -187,7 +187,7 @@ export default function ContatoPage() {
                       placeholder="(00) 00000-0000"
                       value={form.phone}
                       onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#41c1bb] transition-colors"
+                      className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
@@ -200,7 +200,7 @@ export default function ContatoPage() {
                       placeholder="seu@email.com"
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#41c1bb] transition-colors"
+                      className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors"
                     />
                   </div>
                 </div>
@@ -216,7 +216,7 @@ export default function ContatoPage() {
                     placeholder="Conte um pouco sobre seu caso ou a melhor forma de te contatar..."
                     value={form.message}
                     onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#41c1bb] transition-colors resize-none"
+                    className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors resize-none"
                   />
                 </div>
 
@@ -231,7 +231,7 @@ export default function ContatoPage() {
                   id="contact-submit"
                   type="submit"
                   disabled={loading}
-                  className="btn-teal py-4 text-sm font-semibold mt-1 disabled:opacity-60 disabled:cursor-not-allowed w-full"
+                  className="btn-gold py-4 text-sm font-bold mt-1 disabled:opacity-60 disabled:cursor-not-allowed w-full"
                 >
                   {loading ? "Enviando..." : "Agendar avaliação gratuita →"}
                 </button>

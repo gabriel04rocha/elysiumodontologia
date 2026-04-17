@@ -8,18 +8,13 @@ import { Plus, Minus } from "lucide-react";
 const faqs = [
   {
     id: "faq-1",
-    q: "As lentes de contato dental doem?",
-    a: "Não. O procedimento é minimamente invasivo e, na maioria dos casos, não requer anestesia. As lentes são ultrafinas e coladas sobre o esmalte sem a necessidade de desgaste dental significativo.",
+    q: "O procedimento das facetas causam dor?",
+    a: "Não. O procedimento é minimamente invasivo e, na maioria dos casos, não requer anestesia. As lentes e facetas são aplicadas de forma extremamente cuidadosa para garantir total conforto durante todo o processo.",
   },
   {
     id: "faq-2",
-    q: "Quanto tempo duram as facetas de porcelana?",
-    a: "Com cuidados adequados — higiene correta e visitas regulares ao dentista — as facetas de porcelana podem durar entre 10 e 20 anos. A qualidade do material e a técnica de aplicação são determinantes para a durabilidade.",
-  },
-  {
-    id: "faq-3",
-    q: "Em quantas sessões vejo o resultado?",
-    a: "Para lentes de contato dental, em geral o resultado é concluído em 2 a 3 sessões. Facetas de porcelana podem requerer entre 2 e 4 sessões dependendo do número de dentes e da complexidade do caso.",
+    q: "Qual o tempo de duração das facetas de resina e de porcelana?",
+    a: "Com cuidados adequados — higiene correta e visitas regulares ao dentista — as facetas de resina duram em média de 5 a 10 anos, enquanto as de porcelana podem durar entre 10 e 20 anos. Utilizamos materiais de alta performance que garantem a longevidade estética do seu novo sorriso.",
   },
   {
     id: "faq-4",
@@ -57,10 +52,10 @@ function FaqItem({
       id={faq.id}
       className="rounded-2xl overflow-hidden"
       style={{
-        background: open ? "white" : "#f7fefe",
-        border: open ? "1px solid #41c1bb" : "1px solid #e4f4f3",
+        background: open ? "#FAF9F6" : "white",
+        border: open ? "1px solid #CBB27A" : "1px solid rgba(142, 111, 58, 0.15)",
         transition: "border-color 0.25s, background 0.25s",
-        boxShadow: open ? "0 8px 24px rgba(65,193,187,0.14)" : "none",
+        boxShadow: open ? "0 12px 24px rgba(0,0,0,0.05)" : "none",
       }}
     >
       <button
@@ -69,8 +64,8 @@ function FaqItem({
         aria-expanded={open}
       >
         <span
-          className="font-body font-medium text-sm leading-snug"
-          style={{ color: open ? "#1a2f38" : "#2d4d59" }}
+          className="font-body font-bold text-sm leading-snug"
+          style={{ color: open ? "#0E2A26" : "#2D4D59" }}
         >
           {faq.q}
         </span>
@@ -78,14 +73,14 @@ function FaqItem({
           className="flex-shrink-0 w-7 h-7 rounded-full flex items-center justify-center transition-all duration-300"
           style={{
             background: open
-              ? "linear-gradient(135deg, #2d9f99, #41c1bb)"
-              : "rgba(65,193,187,0.12)",
+              ? "linear-gradient(135deg, #8E6F3A, #CBB27A)"
+              : "rgba(142, 111, 58, 0.08)",
           }}
         >
           {open ? (
-            <Minus className="w-3.5 h-3.5 text-white" />
+            <Minus className="w-3.5 h-3.5 text-[#0E2A26]" />
           ) : (
-            <Plus className="w-3.5 h-3.5" style={{ color: "#41c1bb" }} />
+            <Plus className="w-3.5 h-3.5" style={{ color: "#CBB27A" }} />
           )}
         </span>
       </button>
@@ -101,7 +96,7 @@ function FaqItem({
             className="overflow-hidden"
           >
             <div className="px-6 pb-5">
-              <p className="font-body text-sm text-slate-500 leading-relaxed">
+              <p className="font-body text-sm text-[#2D4D59]/80 leading-relaxed">
                 {faq.a}
               </p>
             </div>
@@ -127,22 +122,22 @@ export function FaqSection() {
           className="text-center mb-14"
         >
           <p
-            className="text-xs font-body font-semibold uppercase tracking-[0.22em] mb-4"
-            style={{ color: "#41c1bb" }}
+            className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
+            style={{ color: "#8E6F3A" }}
           >
             Dúvidas Frequentes
           </p>
           <h2
-            className="font-heading font-bold mb-6"
-            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#1a2f38" }}
+            className="font-heading font-bold mb-6 text-[#0E2A26]"
+            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
           >
             Tudo que você precisa
             <br />
-            <em className="not-italic" style={{ color: "#375c6d" }}>
+            <em className="not-italic" style={{ color: "#8E6F3A" }}>
               saber antes de começar
             </em>
           </h2>
-          <span className="divider-teal mx-auto block" />
+          <span className="divider-gold mx-auto block" />
         </motion.div>
 
         {/* FAQ items */}

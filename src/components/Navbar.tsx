@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, Phone } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import Image from "next/image";
 
 const navLinks = [
@@ -31,10 +31,10 @@ export function Navbar() {
         transition={{ duration: 0.55, ease: "easeOut" }}
         className="fixed top-0 left-0 right-0 z-50"
         style={{
-          background: scrolled ? "rgba(35, 62, 74, 0.92)" : "transparent",
+          background: scrolled ? "rgba(14, 42, 38, 0.95)" : "transparent",
           backdropFilter: scrolled ? "blur(18px)" : "none",
-          borderBottom: scrolled ? "1px solid rgba(65,193,187,0.18)" : "none",
-          padding: scrolled ? "0.6rem 0" : "1.1rem 0",
+          borderBottom: scrolled ? "1px solid rgba(203, 178, 122, 0.25)" : "none",
+          padding: scrolled ? "0.6rem 0" : "1.2rem 0",
           transition: "all 0.4s ease",
         }}
       >
@@ -42,7 +42,7 @@ export function Navbar() {
           {/* Logo */}
           <a href="/#hero" className="select-none">
             <Image
-              src="/Logos/logo-light-clean.png"
+              src="/Logos/logo-gold.png"
               alt="Elysium Odontologia"
               width={160}
               height={37}
@@ -62,7 +62,7 @@ export function Navbar() {
                 {link.label}
                 <span
                   className="absolute -bottom-0.5 left-0 w-0 h-px group-hover:w-full transition-all duration-300"
-                  style={{ background: "linear-gradient(90deg, #2d9f99, #6dd3ce)" }}
+                  style={{ background: "linear-gradient(90deg, #8E6F3A, #F3E6C2)" }}
                 />
               </a>
             ))}
@@ -73,7 +73,7 @@ export function Navbar() {
             <a
               id="nav-cta"
               href="/contato"
-              className="btn-teal px-6 py-2.5 text-sm font-semibold inline-block"
+              className="btn-gold px-7 py-2.5 text-sm font-bold inline-block"
             >
               Agendar Consulta
             </a>
@@ -101,15 +101,15 @@ export function Navbar() {
             exit={{ opacity: 0, y: -16 }}
             transition={{ duration: 0.22 }}
             className="fixed inset-0 z-40 flex flex-col pt-24 px-8 pb-10 gap-4"
-            style={{ background: "rgba(34, 61, 74, 0.97)", backdropFilter: "blur(24px)" }}
+            style={{ background: "rgba(14, 42, 38, 0.98)", backdropFilter: "blur(24px)" }}
           >
             {/* Logo mobile */}
             <div className="absolute top-5 left-6">
               <Image
-                src="/Logos/logo-light-clean.png"
+                src="/Logos/logo-gold.png"
                 alt="Elysium Odontologia"
-                width={140}
-                height={33}
+                width={130}
+                height={30}
                 style={{ display: "block" }}
               />
             </div>
@@ -123,7 +123,7 @@ export function Navbar() {
                 transition={{ delay: i * 0.05 }}
                 onClick={() => setMobileOpen(false)}
                 className="text-3xl font-heading text-white border-b py-4"
-                style={{ borderColor: "rgba(65,193,187,0.15)" }}
+                style={{ borderColor: "rgba(203, 178, 122, 0.2)" }}
               >
                 {link.label}
               </motion.a>
@@ -132,7 +132,7 @@ export function Navbar() {
               href="/contato"
               id="mobile-nav-cta"
               onClick={() => setMobileOpen(false)}
-              className="btn-teal mt-6 py-4 text-center text-lg font-semibold"
+              className="btn-gold mt-6 py-4 text-center text-lg font-bold"
             >
               Agendar Consulta
             </a>

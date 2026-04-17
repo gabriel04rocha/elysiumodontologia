@@ -12,14 +12,14 @@ export function ContactCTASection() {
       id="contato"
       className="section-pad relative overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #223d4a 0%, #375c6d 50%, #2d9f99 100%)",
+        background: "linear-gradient(135deg, #071715 0%, #0E2A26 50%, #123531 100%)",
       }}
     >
       {/* Blobs */}
       <div
         className="absolute top-[-80px] right-[-80px] w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(65,193,187,0.2) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(203, 178, 122, 0.15) 0%, transparent 70%)",
           filter: "blur(60px)",
         }}
       />
@@ -32,8 +32,8 @@ export function ContactCTASection() {
           transition={{ duration: 0.6 }}
         >
           <p
-            className="text-xs font-body font-semibold uppercase tracking-[0.22em] mb-4"
-            style={{ color: "#6dd3ce" }}
+            className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
+            style={{ color: "#F3E6C2" }}
           >
             Comece sua transformação
           </p>
@@ -43,7 +43,7 @@ export function ContactCTASection() {
           >
             Agende sua consulta
             <br />
-            <em className="not-italic" style={{ color: "#41c1bb" }}>
+            <em className="not-italic" style={{ color: "#CBB27A" }}>
               gratuita agora
             </em>
           </h2>
@@ -55,7 +55,7 @@ export function ContactCTASection() {
           <a
             id="contact-section-cta"
             href="/contato"
-            className="btn-teal inline-block px-12 py-4 text-lg font-semibold mb-12"
+            className="btn-gold inline-block px-12 py-4 text-lg font-bold mb-12"
           >
             Quero agendar minha avaliação →
           </a>
@@ -72,9 +72,9 @@ export function ContactCTASection() {
                 <a
                   key={item.text}
                   href={item.href}
-                  className="flex items-center gap-2 font-body text-sm text-white/65 hover:text-white transition-colors"
+                  className="flex items-center gap-2 font-body text-sm text-gold-light/60 hover:text-white transition-colors"
                 >
-                  <Icon className="w-4 h-4 flex-shrink-0" style={{ color: "#41c1bb" }} />
+                  <Icon className="w-4 h-4 flex-shrink-0" style={{ color: "#CBB27A" }} />
                   {item.text}
                 </a>
               );

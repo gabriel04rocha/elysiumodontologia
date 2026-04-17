@@ -38,7 +38,7 @@ export function ProcessSection() {
       id="processo"
       className="section-pad relative overflow-hidden"
       style={{
-        background: "linear-gradient(135deg, #f7fefe 0%, #eaf6f6 100%)",
+        background: "linear-gradient(135deg, #0E2A26 0%, #123531 100%)",
       }}
     >
       {/* Decorative blob */}
@@ -46,7 +46,7 @@ export function ProcessSection() {
         className="absolute right-[-120px] top-[-80px] w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
           background:
-            "radial-gradient(circle, rgba(65,193,187,0.12) 0%, transparent 70%)",
+            "radial-gradient(circle, rgba(203, 178, 122, 0.12) 0%, transparent 70%)",
           filter: "blur(60px)",
         }}
       />
@@ -61,22 +61,22 @@ export function ProcessSection() {
           className="text-center mb-16"
         >
           <p
-            className="text-xs font-body font-semibold uppercase tracking-[0.22em] mb-4"
-            style={{ color: "#41c1bb" }}
+            className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
+            style={{ color: "#CBB27A" }}
           >
             Como Funciona
           </p>
           <h2
             className="font-heading font-bold mb-6"
-            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#1a2f38" }}
+            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#F3E6C2" }}
           >
             Do diagnóstico ao sorriso perfeito
             <br />
-            <em className="not-italic" style={{ color: "#375c6d" }}>
+            <em className="not-italic" style={{ color: "#CBB27A" }}>
               em 4 passos simples
             </em>
           </h2>
-          <span className="divider-teal mx-auto block" />
+          <span className="divider-gold mx-auto block" />
         </motion.div>
 
         {/* Steps */}
@@ -86,7 +86,7 @@ export function ProcessSection() {
             className="hidden lg:block absolute top-[52px] left-[12.5%] right-[12.5%] h-px"
             style={{
               background:
-                "linear-gradient(90deg, transparent, #41c1bb 20%, #41c1bb 80%, transparent)",
+                "linear-gradient(90deg, transparent, #CBB27A 20%, #CBB27A 80%, transparent)",
               opacity: 0.3,
             }}
           />
@@ -117,11 +117,11 @@ export function ProcessSection() {
                     className="w-[88px] h-[88px] rounded-full flex items-center justify-center relative flex-shrink-0"
                     style={{
                       background:
-                        "linear-gradient(135deg, #2d9f99 0%, #41c1bb 100%)",
-                      boxShadow: "0 12px 32px rgba(65,193,187,0.35)",
+                        "linear-gradient(135deg, #8E6F3A 0%, #CBB27A 100%)",
+                      boxShadow: "0 12px 32px rgba(142, 111, 58, 0.35)",
                     }}
                   >
-                    <span className="font-heading font-bold text-white text-3xl leading-none">
+                    <span className="font-heading font-bold text-[#0E2A26] text-3xl leading-none">
                       {step.number}
                     </span>
                   </div>
@@ -129,11 +129,11 @@ export function ProcessSection() {
                   <div>
                     <h3
                       className="font-heading font-semibold text-xl mb-2"
-                      style={{ color: "#1a2f38" }}
+                      style={{ color: "#F3E6C2" }}
                     >
                       {step.title}
                     </h3>
-                    <p className="font-body text-sm text-slate-500 leading-relaxed">
+                    <p className="font-body text-sm text-gold-light/60 leading-relaxed">
                       {step.description}
                     </p>
                   </div>

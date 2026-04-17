@@ -6,24 +6,24 @@ import { Sparkles, Shield, Zap, Eye } from "lucide-react";
 
 const treatments = [
   {
-    id: "lentes",
+    id: "resina",
     icon: Sparkles,
-    title: "Lentes de Contato Dental",
-    subtitle: "Ultra-conservador",
+    title: "Facetas de Resina",
+    subtitle: "Nosso Carro-Chefe",
     description:
-      "As lentes de contato dental são lâminas de porcelana com apenas 0,3mm de espessura. Sem desgaste do dente natural — aderidas diretamente ao esmalte para um resultado impecável.",
-    benefits: ["Sem desgaste dental", "Resultado em 2 sessões", "Duração de até 20 anos"],
-    accent: "#41c1bb",
+      "A solução mais versátil para transformar seu sorriso. A resina premium permite correções precisas de cor e forma em tempo recorde, com acabamento natural e alta durabilidade.",
+    benefits: ["Transformação imediata", "Minimamente invasivo", "Custo-benefício excelente"],
+    accent: "#CBB27A",
   },
   {
-    id: "facetas",
+    id: "porcelana",
     icon: Shield,
-    title: "Facetas de Porcelana",
-    subtitle: "Alta estética",
+    title: "Lentes de Porcelana",
+    subtitle: "Estética Premium",
     description:
-      "As facetas cobrem a face frontal do dente, corrigindo cor, forma e alinhamento. Indicadas para casos mais complexos, com resultado natural e altamente personalizado.",
-    benefits: ["Correção de formato", "Cor personalizada", "Alta resistência"],
-    accent: "#375c6d",
+      "Lâminas ultrafinas de cerâmica que oferecem a máxima resistência e estabilidade de cor ao longo dos anos. Ideais para quem busca o máximo em sofisticação.",
+    benefits: ["Alta durabilidade", "Resistência a manchas", "Brilho permanente"],
+    accent: "#8E6F3A",
   },
   {
     id: "digital",
@@ -33,7 +33,7 @@ const treatments = [
     description:
       "Com o planejamento digital, você visualiza o resultado do seu novo sorriso ainda na consulta — antes de qualquer procedimento. Zero surpresas, total segurança.",
     benefits: ["Visualização prévia", "Planejamento preciso", "Resultado previsível"],
-    accent: "#4f7f94",
+    accent: "#F3E6C2",
   },
   {
     id: "clareamento",
@@ -43,7 +43,7 @@ const treatments = [
     description:
       "O clareamento profissional potencializa o resultado das lentes e facetas. Realizado com tecnologia LED de última geração para efeito máximo com mínima sensibilidade.",
     benefits: ["Até 8 tons mais claro", "Baixa sensibilidade", "Resultado imediato"],
-    accent: "#2d9f99",
+    accent: "#CBB27A",
   },
 ];
 
@@ -66,15 +66,15 @@ function TreatmentCard({
       id={`treatment-${treatment.id}`}
       className="hover-lift group relative bg-white rounded-3xl p-8 flex flex-col gap-5 overflow-hidden"
       style={{
-        boxShadow: "0 4px 24px rgba(55,92,109,0.08)",
-        border: "1px solid #e4f4f3",
+        boxShadow: "0 12px 32px rgba(203, 178, 122, 0.12)",
+        border: "1px solid rgba(203, 178, 122, 0.15)",
       }}
     >
       {/* Top accent bar */}
       <div
         className="absolute top-0 left-0 right-0 h-1 rounded-t-3xl"
         style={{
-          background: `linear-gradient(90deg, ${treatment.accent}, #6dd3ce)`,
+          background: `linear-gradient(90deg, ${treatment.accent}, #F3E6C2)`,
         }}
       />
 
@@ -96,14 +96,13 @@ function TreatmentCard({
 
       {/* Title */}
       <h3
-        className="font-heading font-semibold text-2xl leading-tight"
-        style={{ color: "#1a2f38" }}
+        className="font-heading font-bold text-2xl leading-tight text-[#0E2A26]"
       >
         {treatment.title}
       </h3>
 
       {/* Description */}
-      <p className="font-body text-sm leading-relaxed text-slate-500">
+      <p className="font-body text-sm leading-relaxed text-[#2D4D59]/80">
         {treatment.description}
       </p>
 
@@ -115,7 +114,7 @@ function TreatmentCard({
               className="w-1.5 h-1.5 rounded-full flex-shrink-0"
               style={{ background: treatment.accent }}
             />
-            <span className="text-xs font-body text-slate-600">{b}</span>
+            <span className="text-xs font-body text-[#2D4D59]/70">{b}</span>
           </li>
         ))}
       </ul>
@@ -127,7 +126,7 @@ export function TreatmentsSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="tratamentos" className="section-pad bg-white">
+    <section id="tratamentos" className="section-pad bg-[#FAF9F6]">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -138,24 +137,24 @@ export function TreatmentsSection() {
           className="text-center mb-16"
         >
           <p
-            className="text-xs font-body font-semibold uppercase tracking-[0.22em] mb-4"
-            style={{ color: "#41c1bb" }}
+            className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
+            style={{ color: "#CBB27A" }}
           >
             Nossos Tratamentos
           </p>
           <h2
-            className="font-heading font-bold mb-6"
-            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#1a2f38" }}
+            className="font-heading font-bold mb-6 text-[#0E2A26]"
+            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
           >
             Soluções que transformam
             <br />
-            <em className="not-italic" style={{ color: "#41c1bb" }}>
+            <em className="not-italic" style={{ color: "#8E6F3A" }}>
               cada sorriso
             </em>
           </h2>
-          <span className="divider-teal mx-auto block" />
+          <span className="divider-gold mx-auto block" />
           <p
-            className="font-body text-slate-500 mt-6 max-w-2xl mx-auto leading-relaxed"
+            className="font-body text-[#2D4D59]/80 mt-6 max-w-2xl mx-auto leading-relaxed"
           >
             Cada tratamento é planejado individualmente, respeitando as
             características únicas do seu rosto, dentes e personalidade.

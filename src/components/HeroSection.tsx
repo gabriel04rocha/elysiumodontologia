@@ -10,31 +10,31 @@ export function HeroSection() {
       id="hero"
       className="relative min-h-screen flex items-center justify-center overflow-hidden noise"
       style={{
-        background: "linear-gradient(135deg, #223d4a 0%, #375c6d 48%, #2d9f99 100%)",
+        background: "radial-gradient(circle at top right, #123531 0%, #0E2A26 60%, #071715 100%)",
       }}
     >
       {/* Ambient blobs */}
       <div
         className="absolute top-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(65,193,187,0.22) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(203, 178, 122, 0.12) 0%, transparent 70%)",
           filter: "blur(60px)",
         }}
       />
       <div
         className="absolute bottom-[-15%] left-[-8%] w-[500px] h-[500px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(55,92,109,0.4) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(203, 178, 122, 0.08) 0%, transparent 70%)",
           filter: "blur(80px)",
         }}
       />
 
       {/* Grid overlay */}
       <div
-        className="absolute inset-0 pointer-events-none opacity-[0.04]"
+        className="absolute inset-0 pointer-events-none opacity-[0.03]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)",
+            "linear-gradient(rgba(203,178,122,0.3) 1px, transparent 1px), linear-gradient(90deg, rgba(203,178,122,0.3) 1px, transparent 1px)",
           backgroundSize: "60px 60px",
         }}
       />
@@ -51,13 +51,13 @@ export function HeroSection() {
               className="inline-flex items-center gap-3 glass rounded-full px-4 py-2 mb-6"
             >
               <Image
-                src="/Logos/logo-icone-light.png"
+                src="/Logos/logo-icon-gold.png"
                 alt="Elysium Odontologia"
-                width={24}
-                height={24}
+                width={20}
+                height={20}
                 className="object-contain"
               />
-              <span className="text-xs font-body font-medium text-white/80 tracking-wide">
+              <span className="text-xs font-body font-semibold text-white/80 tracking-wide uppercase">
                 Odontologia Estética Avançada
               </span>
             </motion.div>
@@ -67,16 +67,16 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-heading font-bold text-white mb-6"
+              className="font-heading font-bold text-white mb-6 leading-[1.1]"
               style={{ fontSize: "clamp(2.6rem, 5vw, 4.2rem)" }}
             >
               Seu sorriso,{" "}
-              <em className="not-italic font-light" style={{ color: "#6dd3ce" }}>
+              <em className="not-italic font-light text-gold-light">
                 perfeito
               </em>
               <br />
               como você sempre{" "}
-              <em className="not-italic" style={{ color: "#41c1bb" }}>
+              <em className="not-italic text-gold" >
                 sonhou
               </em>
             </motion.h1>
@@ -88,10 +88,10 @@ export function HeroSection() {
               className="font-body text-white/70 leading-relaxed mb-8 max-w-lg"
               style={{ fontSize: "1.05rem" }}
             >
-              Na Elysium Odontologia combinamos{" "}
-              <strong className="text-white/90">tecnologia de ponta</strong> e
-              uma visão artística única para criar lentes e facetas dentárias que
-              transformam sorrisos de forma natural e duradoura.
+              Na Elysium Odontologia somos especialistas em transformar sorrisos com{" "}
+              <strong className="text-white/90">Facetas de Resina</strong> de alta
+              performance e Porcelana, unindo tecnologia e arte para um
+              resultado natural e imediato.
             </motion.p>
 
             {/* Checks */}
@@ -102,12 +102,12 @@ export function HeroSection() {
               className="flex flex-col gap-2.5 mb-10"
             >
               {[
-                "Ultrafinas — sem desgaste dental excessivo",
-                "Resultado imediato e duradouro (10–20 anos)",
+                "Facetas de Resina — seu sorriso novo em um único dia",
+                "Lentes de Porcelana para máxima sofisticação",
                 "Planejamento digital com simulação prévia",
               ].map((item) => (
                 <li key={item} className="flex items-center gap-3">
-                  <CheckCircle2 className="w-5 h-5 flex-shrink-0" style={{ color: "#41c1bb" }} />
+                  <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-gold" />
                   <span className="text-sm font-body text-white/80">{item}</span>
                 </li>
               ))}
@@ -123,14 +123,14 @@ export function HeroSection() {
               <a
                 id="hero-cta-primary"
                 href="/contato"
-                className="btn-teal px-8 py-3.5 text-base font-semibold"
+                className="btn-gold px-8 py-3.5 text-base font-bold"
               >
                 Quero meu sorriso novo
               </a>
               <a
                 id="hero-cta-secondary"
                 href="#resultados"
-                className="btn-outline-white px-8 py-3.5 text-base"
+                className="btn-outline-gold px-8 py-3.5 text-base font-semibold"
               >
                 Ver resultados
               </a>
@@ -146,7 +146,7 @@ export function HeroSection() {
           >
             <div
               className="glass rounded-3xl overflow-hidden w-full max-w-sm"
-              style={{ boxShadow: "0 32px 64px rgba(0,0,0,0.25)" }}
+              style={{ boxShadow: "0 32px 64px rgba(0,0,0,0.4)" }}
             >
               <div className="relative w-full" style={{ aspectRatio: "3/4" }}>
                 <Image
@@ -163,14 +163,14 @@ export function HeroSection() {
                 <div
                   className="absolute bottom-0 left-0 right-0 p-5"
                   style={{
-                    background: "linear-gradient(transparent, rgba(22,44,55,0.85))",
+                    background: "linear-gradient(transparent, rgba(7,23,21,0.9))",
                   }}
                 >
                   <p className="font-heading text-white text-lg font-semibold">
                     Sorriso transformado
                   </p>
                   <p className="font-body text-white/65 text-xs mt-0.5">
-                    Lentes de Contato Dental — Elysium
+                    Facetas de Resina — Elysium
                   </p>
                 </div>
               </div>

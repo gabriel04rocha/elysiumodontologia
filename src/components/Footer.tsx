@@ -35,7 +35,7 @@ export function Footer() {
   return (
     <footer
       style={{
-        background: "linear-gradient(180deg, #1a2f38 0%, #0f1e25 100%)",
+        background: "linear-gradient(180deg, #0E2A26 0%, #071715 100%)",
       }}
     >
       <div className="max-w-7xl mx-auto px-6">
@@ -46,7 +46,7 @@ export function Footer() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55 }}
           className="flex flex-col sm:flex-row items-center justify-between gap-4 py-8 border-b"
-          style={{ borderColor: "rgba(65,193,187,0.15)" }}
+          style={{ borderColor: "rgba(203, 178, 122, 0.15)" }}
         >
           <p className="font-heading text-white text-xl font-semibold">
             Pronto para transformar seu sorriso?
@@ -54,7 +54,7 @@ export function Footer() {
           <a
             id="footer-cta"
             href="/contato"
-            className="btn-teal px-8 py-3 text-sm font-semibold flex-shrink-0"
+            className="btn-gold px-8 py-3 text-sm font-bold flex-shrink-0"
           >
             Agendar agora
           </a>
@@ -66,10 +66,10 @@ export function Footer() {
           <div className="flex flex-col gap-5">
             <a href="/">
               <Image
-                src="/Logos/logo-light-clean.png"
+                src="/Logos/logo-gold.png"
                 alt="Elysium Odontologia"
-                width={180}
-                height={42}
+                width={160}
+                height={37}
                 style={{ display: "block" }}
               />
             </a>
@@ -85,11 +85,11 @@ export function Footer() {
                 rel="noopener noreferrer"
                 className="w-9 h-9 rounded-xl flex items-center justify-center transition-all hover:opacity-80"
                 style={{
-                  background: "rgba(65,193,187,0.12)",
-                  border: "1px solid rgba(65,193,187,0.2)",
+                  background: "rgba(203, 178, 122, 0.12)",
+                  border: "1px solid rgba(203, 178, 122, 0.2)",
                 }}
               >
-                <IconInstagram className="w-4 h-4" style={{ color: "#41c1bb" }} />
+                <IconInstagram className="w-4 h-4" style={{ color: "#CBB27A" }} />
               </a>
             </div>
           </div>
@@ -99,7 +99,7 @@ export function Footer() {
             <div key={category} className="flex flex-col gap-4">
               <p
                 className="text-xs font-body font-semibold uppercase tracking-[0.18em]"
-                style={{ color: "#41c1bb" }}
+                style={{ color: "#CBB27A" }}
               >
                 {category}
               </p>
@@ -122,15 +122,15 @@ export function Footer() {
         {/* Bottom bar */}
         <div
           className="flex flex-col sm:flex-row items-center justify-between gap-2 py-6 border-t"
-          style={{ borderColor: "rgba(65,193,187,0.1)" }}
+          style={{ borderColor: "rgba(203, 178, 122, 0.1)" }}
         >
           <p className="font-body text-xs text-white/30">
             © {new Date().getFullYear()} Elysium Odontologia. Todos os direitos reservados.
           </p>
           <p className="font-body text-xs text-white/25">
             Desenvolvido por{" "}
-            <a href="https://insiteweb.com.br" target="_blank" rel="noopener noreferrer" className="hover:text-white/50 transition-colors">
-              Insite Web
+            <a href="https://insitemarketing.digital" target="_blank" rel="noopener noreferrer" className="hover:text-white/50 transition-colors">
+              In Site Marketing Digital
             </a>
           </p>
         </div>

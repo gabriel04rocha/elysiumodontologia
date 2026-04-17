@@ -8,7 +8,7 @@ export function ResultsSection() {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
-    <section id="resultados" className="section-pad bg-white">
+    <section id="resultados" className="section-pad bg-background">
       <div className="max-w-7xl mx-auto px-6">
         {/* Header */}
         <motion.div
@@ -19,23 +19,23 @@ export function ResultsSection() {
           className="text-center mb-16"
         >
           <p
-            className="text-xs font-body font-semibold uppercase tracking-[0.22em] mb-4"
-            style={{ color: "#41c1bb" }}
+            className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
+            style={{ color: "#CBB27A" }}
           >
             Transformações Reais
           </p>
           <h2
             className="font-heading font-bold mb-6"
-            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#1a2f38" }}
+            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#F3E6C2" }}
           >
             Resultados que falam
             <br />
-            <em className="not-italic" style={{ color: "#41c1bb" }}>
+            <em className="not-italic" style={{ color: "#CBB27A" }}>
               por si mesmos
             </em>
           </h2>
-          <span className="divider-teal mx-auto block" />
-          <p className="font-body text-slate-500 mt-6 max-w-xl mx-auto text-sm leading-relaxed">
+          <span className="divider-gold mx-auto block" />
+          <p className="font-body text-gold-light/60 mt-6 max-w-xl mx-auto text-sm leading-relaxed">
             Casos reais, resultados reais. Cada sorriso é único e planejado
             individualmente por nossa equipe.
           </p>
@@ -50,7 +50,7 @@ export function ResultsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.55 }}
             className="hover-lift rounded-3xl overflow-hidden"
-            style={{ boxShadow: "0 8px 32px rgba(55,92,109,0.12)", border: "1px solid #e4f4f3" }}
+            style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.4)", border: "1px solid rgba(203, 178, 122, 0.2)" }}
           >
             <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
               <Image
@@ -61,20 +61,20 @@ export function ResultsSection() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div
-                className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-body font-semibold"
-                style={{ background: "rgba(55,92,109,0.85)", color: "white", backdropFilter: "blur(8px)" }}
+                className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-body font-bold uppercase"
+                style={{ background: "rgba(142, 111, 58, 0.85)", color: "white", backdropFilter: "blur(8px)" }}
               >
                 Antes → Depois
               </div>
             </div>
-            <div className="p-6 bg-white">
+            <div className="p-6 bg-[#123531]">
               <span
-                className="text-xs font-body font-semibold uppercase tracking-wide px-3 py-1 rounded-full"
-                style={{ background: "rgba(65,193,187,0.12)", color: "#2d9f99" }}
+                className="text-xs font-body font-bold uppercase tracking-wide px-3 py-1 rounded-full"
+                style={{ background: "rgba(203, 178, 122, 0.12)", color: "#CBB27A" }}
               >
-                Facetas de Porcelana
+                Facetas de Resina Premium
               </span>
-              <p className="font-body text-sm text-slate-500 mt-3">
+              <p className="font-body text-sm text-gold-light/60 mt-3">
                 Correção de cor, forma e alinhamento com resultado natural e duradouro.
               </p>
             </div>
@@ -87,7 +87,7 @@ export function ResultsSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.55, delay: 0.1 }}
             className="hover-lift rounded-3xl overflow-hidden"
-            style={{ boxShadow: "0 8px 32px rgba(55,92,109,0.12)", border: "1px solid #e4f4f3" }}
+            style={{ boxShadow: "0 8px 32px rgba(0,0,0,0.4)", border: "1px solid rgba(203, 178, 122, 0.2)" }}
           >
             <div className="relative w-full" style={{ aspectRatio: "4/3" }}>
               <Image
@@ -98,20 +98,20 @@ export function ResultsSection() {
                 sizes="(max-width: 768px) 100vw, 50vw"
               />
               <div
-                className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-body font-semibold"
-                style={{ background: "rgba(65,193,187,0.9)", color: "white", backdropFilter: "blur(8px)" }}
+                className="absolute top-4 left-4 px-3 py-1.5 rounded-full text-xs font-body font-bold uppercase"
+                style={{ background: "rgba(203, 178, 122, 0.9)", color: "#0E2A26", backdropFilter: "blur(8px)" }}
               >
                 Resultado Final
               </div>
             </div>
-            <div className="p-6 bg-white">
+            <div className="p-6 bg-[#123531]">
               <span
-                className="text-xs font-body font-semibold uppercase tracking-wide px-3 py-1 rounded-full"
-                style={{ background: "rgba(65,193,187,0.12)", color: "#2d9f99" }}
+                className="text-xs font-body font-bold uppercase tracking-wide px-3 py-1 rounded-full"
+                style={{ background: "rgba(203, 178, 122, 0.12)", color: "#CBB27A" }}
               >
-                Lentes de Contato Dental
+                Facetas e Lentes de Porcelana
               </span>
-              <p className="font-body text-sm text-slate-500 mt-3">
+              <p className="font-body text-sm text-gold-light/60 mt-3">
                 Sorriso uniforme e luminoso com lentes ultrafinas — zero desgaste dental.
               </p>
             </div>
@@ -129,7 +129,7 @@ export function ResultsSection() {
           <a
             id="results-cta"
             href="/contato"
-            className="btn-teal inline-block px-10 py-3.5 text-base font-semibold"
+            className="btn-gold inline-block px-10 py-3.5 text-base font-bold"
           >
             Quero transformar meu sorriso
           </a>

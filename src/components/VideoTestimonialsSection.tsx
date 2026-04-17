@@ -42,8 +42,8 @@ function VideoCard({ video, index }: { video: typeof videos[0]; index: number })
       transition={{ duration: 0.55, delay: index * 0.15 }}
       className="hover-lift rounded-3xl overflow-hidden group relative w-full h-full mx-auto"
       style={{ 
-        boxShadow: "0 12px 40px rgba(55,92,109,0.18)", 
-        border: "1px solid rgba(65,193,187,0.2)",
+        boxShadow: "0 12px 40px rgba(0,0,0,0.4)", 
+        border: "1px solid rgba(203, 178, 122, 0.2)",
         aspectRatio: "9/16",
         maxHeight: "520px"
       }}
@@ -62,15 +62,15 @@ function VideoCard({ video, index }: { video: typeof videos[0]; index: number })
         <div
           className="absolute inset-0 flex items-center justify-center cursor-pointer"
           onClick={togglePlay}
-          style={{ background: "rgba(22,44,55,0.35)" }}
+          style={{ background: "rgba(7,23,21,0.45)" }}
         >
           <motion.div
             whileHover={{ scale: 1.08 }}
             whileTap={{ scale: 0.95 }}
             className="w-16 h-16 rounded-full flex items-center justify-center shadow-lg"
             style={{
-              background: "linear-gradient(135deg, #2d9f99, #41c1bb)",
-              boxShadow: "0 8px 32px rgba(65,193,187,0.5)",
+              background: "linear-gradient(135deg, #8E6F3A, #CBB27A)",
+              boxShadow: "0 8px 32px rgba(142, 111, 58, 0.5)",
             }}
           >
             <Play className="w-7 h-7 text-white ml-1" fill="white" />
@@ -97,13 +97,13 @@ export function VideoTestimonialsSection() {
     <section
       id="depoimentos"
       className="section-pad relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #f7fefe 0%, #eaf6f6 100%)" }}
+      style={{ background: "linear-gradient(135deg, #0E2A26 0%, #123531 100%)" }}
     >
       {/* Blob */}
       <div
         className="absolute right-[-60px] top-[-60px] w-[400px] h-[400px] rounded-full pointer-events-none"
         style={{
-          background: "radial-gradient(circle, rgba(65,193,187,0.12) 0%, transparent 70%)",
+          background: "radial-gradient(circle, rgba(203, 178, 122, 0.12) 0%, transparent 70%)",
           filter: "blur(60px)",
         }}
       />
@@ -118,23 +118,23 @@ export function VideoTestimonialsSection() {
           className="text-center mb-14"
         >
           <p
-            className="text-xs font-body font-semibold uppercase tracking-[0.22em] mb-4"
-            style={{ color: "#41c1bb" }}
+            className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
+            style={{ color: "#CBB27A" }}
           >
             Depoimentos em Vídeo
           </p>
           <h2
             className="font-heading font-bold mb-6"
-            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#1a2f38" }}
+            style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#F3E6C2" }}
           >
             Ouça quem já
             <br />
-            <em className="not-italic" style={{ color: "#375c6d" }}>
+            <em className="not-italic" style={{ color: "#CBB27A" }}>
               transformou o sorriso
             </em>
           </h2>
-          <span className="divider-teal mx-auto block" />
-          <p className="font-body text-slate-500 mt-5 max-w-lg mx-auto text-sm leading-relaxed">
+          <span className="divider-gold mx-auto block" />
+          <p className="font-body text-gold-light/60 mt-5 max-w-lg mx-auto text-sm leading-relaxed">
             Nada melhor do que ouvir diretamente de quem viveu a experiência.
           </p>
         </motion.div>
