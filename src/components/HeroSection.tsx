@@ -67,7 +67,7 @@ export function HeroSection() {
               initial={{ opacity: 0, y: 24 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1 }}
-              className="font-heading font-bold text-white mb-6 leading-[1.1]"
+              className="font-premium font-extrabold text-white mb-6 leading-[1.1] tracking-tight normal-case"
               style={{ fontSize: "clamp(2.6rem, 5vw, 4.2rem)" }}
             >
               Seu sorriso,{" "}

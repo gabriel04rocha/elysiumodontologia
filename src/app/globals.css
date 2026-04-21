@@ -12,6 +12,7 @@
   --color-foreground:            var(--foreground);
   --font-sans:                   var(--font-inter);
   --font-heading:                var(--font-cinzel);
+  --font-premium:                var(--font-montserrat);
   --font-mono:                   var(--font-geist-mono);
 
   /* ── Brand tokens ── */
@@ -79,8 +80,9 @@
   --radius:                 0.75rem;
 
   /* Font mappings */
-  --font-inter:  'Inter', sans-serif;
-  --font-cinzel: 'Cinzel', serif;
+  --font-inter:      'Inter', sans-serif;
+  --font-cinzel:     'Cinzel', serif;
+  --font-montserrat: 'Montserrat', sans-serif;
 }
 
 /* ─── Base ─────────────────────────────────────────── */
@@ -115,6 +117,7 @@
 @layer utilities {
   .font-heading { font-family: var(--font-cinzel); }
   .font-body    { font-family: var(--font-inter); }
+  .font-premium { font-family: var(--font-montserrat); }
 
   /* ── Gold gradient text ── */
   .gradient-gold {
