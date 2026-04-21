@@ -12,7 +12,7 @@ import { Footer } from "@/components/Footer";
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <Navbar ctaHref="/contato?source=geral" />
       <main>
         <HeroSection />
         <TreatmentsSection />

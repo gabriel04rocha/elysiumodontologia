@@ -1,18 +1,26 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { CheckCircle2, ArrowLeft } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSearchParams } from "next/navigation";
 
 const WEBHOOK_SERVER_URL = process.env.NEXT_PUBLIC_WEBHOOK_URL || "https://api.elysiumodontologia.com.br";
 
-export default function ContatoPage() {
+function ContatoForm() {
+  const searchParams = useSearchParams();
   const [form, setForm] = useState({ name: "", phone: "", email: "", message: "" });
   const [loading, setLoading] = useState(false);
   const [sent, setSent] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [source, setSource] = useState<string>("geral");
+
+  useEffect(() => {
+    const s = searchParams.get("source");
+    if (s) setSource(s);
+  }, [searchParams]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,7 +31,7 @@ export default function ContatoPage() {
       const res = await fetch(`${WEBHOOK_SERVER_URL}/submit`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
+        body: JSON.stringify({ ...form, source }),
       });
 
       if (!res.ok) {
@@ -39,6 +47,169 @@ export default function ContatoPage() {
     }
   };
 
+  return (
+    <div className="grid lg:grid-cols-2 gap-14 items-start">
+      {/* Esquerda — texto */}
+      <motion.div
+        initial={{ opacity: 0, x: -30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <p
+          className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
+          style={{ color: "#F3E6C2" }}
+        >
+          Entre em Contato
+        </p>
+        <h1
+          className="font-heading font-bold text-white mb-5"
+          style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
+        >
+          Agende sua avaliação{" "}
+          <em className="not-italic" style={{ color: "#CBB27A" }}>
+            gratuita
+          </em>
+        </h1>
+        <p className="font-body text-white/70 text-sm leading-relaxed mb-10 max-w-md">
+          Preencha o formulário e nossa equipe entrará em contato em até{" "}
+          <strong className="text-white/90">24 horas</strong> para confirmar
+          seu agendamento personalizado.
+        </p>
+
+        <div className="flex flex-col gap-6">
+           <div className="p-6 rounded-2xl glass-gold border border-white/10">
+              <p className="text-sm font-body text-white/80 leading-relaxed">
+                Estamos prontos para transformar seu sorriso com tecnologia de ponta e as melhores lentes dentárias do mercado. Aguardamos sua mensagem.
+              </p>
+           </div>
+        </div>
+      </motion.div>
+
+      {/* Direita — Formulário */}
+      <motion.div
+        initial={{ opacity: 0, x: 30 }}
+        animate={{ opacity: 1, x: 0 }}
+        transition={{ duration: 0.6, delay: 0.15 }}
+        className="glass rounded-3xl p-8 lg:p-10"
+        style={{ boxShadow: "0 24px 64px rgba(0,0,0,0.2)" }}
+      >
+        {sent ? (
+          <div className="flex flex-col items-center justify-center gap-5 py-12 text-center">
+            <CheckCircle2 className="w-16 h-16" style={{ color: "#CBB27A" }} />
+            <h2 className="font-heading text-white text-2xl font-semibold">
+              Solicitação enviada!
+            </h2>
+            <p className="font-body text-white/65 text-sm max-w-xs">
+              Em breve nossa equipe entrará em contato para confirmar seu
+              agendamento. Obrigado!
+            </p>
+            <Link
+              href="/"
+              className="btn-gold mt-4 px-8 py-3 text-sm font-bold inline-block"
+            >
+              Voltar ao início
+            </Link>
+          </div>
+        ) : (
+          <form id="contact-form" onSubmit={handleSubmit} className="flex flex-col gap-5">
+            <div>
+              <h2 className="font-heading text-white text-2xl font-semibold mb-1">
+                Solicite sua avaliação
+              </h2>
+              <p className="font-body text-white/50 text-xs">
+                Todos os campos marcados com * são obrigatórios.
+              </p>
+            </div>
+
+            {/* Name */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="f-name" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
+                Nome completo *
+              </label>
+              <input
+                id="f-name"
+                type="text"
+                required
+                placeholder="Seu nome"
+                value={form.name}
+                onChange={(e) => setForm({ ...form, name: e.target.value })}
+                className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors"
+              />
+            </div>
+
+            {/* Phone + email */}
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="f-phone" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
+                  WhatsApp *
+                </label>
+                <input
+                  id="f-phone"
+                  type="tel"
+                  required
+                  placeholder="(00) 00000-0000"
+                  value={form.phone}
+                  onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                  className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors"
+                />
+              </div>
+              <div className="flex flex-col gap-1.5">
+                <label htmlFor="f-email" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
+                  E-mail
+                </label>
+                <input
+                  id="f-email"
+                  type="email"
+                  placeholder="seu@email.com"
+                  value={form.email}
+                  onChange={(e) => setForm({ ...form, email: e.target.value })}
+                  className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors"
+                />
+              </div>
+            </div>
+
+            {/* Message */}
+            <div className="flex flex-col gap-1.5">
+              <label htmlFor="f-message" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
+                Mensagem (opcional)
+              </label>
+              <textarea
+                id="f-message"
+                rows={4}
+                placeholder="Conte um pouco sobre seu caso ou a melhor forma de te contatar..."
+                value={form.message}
+                onChange={(e) => setForm({ ...form, message: e.target.value })}
+                className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors resize-none"
+              />
+            </div>
+
+            {/* Error */}
+            {error && (
+              <p className="text-red-300 text-xs font-body bg-red-900/20 rounded-lg px-4 py-2">
+                ⚠ {error}
+              </p>
+            )}
+
+            <button
+              id="contact-submit"
+              type="submit"
+              disabled={loading}
+              className="btn-gold py-4 text-sm font-bold mt-1 disabled:opacity-60 disabled:cursor-not-allowed w-full"
+            >
+              {loading ? "Enviando..." : "Agendar avaliação gratuita →"}
+            </button>
+
+            <p className="text-center text-white/30 text-xs font-body">
+              Seus dados são tratados com total sigilo e privacidade.
+            </p>
+          </form>
+        )}
+      </motion.div>
+    </div>
+  );
+}
+
+export default function ContatoPage() {
   return (
     <div
       className="min-h-screen"
@@ -84,165 +255,10 @@ export default function ContatoPage() {
           <div className="w-16" />
         </div>
 
-        {/* Grid principal */}
-        <div className="grid lg:grid-cols-2 gap-14 items-start">
-          {/* Esquerda — texto */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6 }}
-          >
-            <p
-              className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
-              style={{ color: "#F3E6C2" }}
-            >
-              Entre em Contato
-            </p>
-            <h1
-              className="font-heading font-bold text-white mb-5"
-              style={{ fontSize: "clamp(2rem, 4vw, 3.2rem)" }}
-            >
-              Agende sua avaliação{" "}
-              <em className="not-italic" style={{ color: "#CBB27A" }}>
-                gratuita
-              </em>
-            </h1>
-            <p className="font-body text-white/70 text-sm leading-relaxed mb-10 max-w-md">
-              Preencha o formulário e nossa equipe entrará em contato em até{" "}
-              <strong className="text-white/90">24 horas</strong> para confirmar
-              seu agendamento personalizado.
-            </p>
-
-            <div className="flex flex-col gap-6">
-               <div className="p-6 rounded-2xl glass-gold border border-white/10">
-                  <p className="text-sm font-body text-white/80 leading-relaxed">
-                    Estamos prontos para transformar seu sorriso com tecnologia de ponta e as melhores lentes dentárias do mercado. Aguardamos sua mensagem.
-                  </p>
-               </div>
-            </div>
-          </motion.div>
-
-          {/* Direita — Formulário */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.6, delay: 0.15 }}
-            className="glass rounded-3xl p-8 lg:p-10"
-            style={{ boxShadow: "0 24px 64px rgba(0,0,0,0.2)" }}
-          >
-            {sent ? (
-              <div className="flex flex-col items-center justify-center gap-5 py-12 text-center">
-                <CheckCircle2 className="w-16 h-16" style={{ color: "#CBB27A" }} />
-                <h2 className="font-heading text-white text-2xl font-semibold">
-                  Solicitação enviada!
-                </h2>
-                <p className="font-body text-white/65 text-sm max-w-xs">
-                  Em breve nossa equipe entrará em contato para confirmar seu
-                  agendamento. Obrigado!
-                </p>
-                <Link
-                  href="/"
-                  className="btn-gold mt-4 px-8 py-3 text-sm font-bold inline-block"
-                >
-                  Voltar ao início
-                </Link>
-              </div>
-            ) : (
-              <form id="contact-form" onSubmit={handleSubmit} className="flex flex-col gap-5">
-                <div>
-                  <h2 className="font-heading text-white text-2xl font-semibold mb-1">
-                    Solicite sua avaliação
-                  </h2>
-                  <p className="font-body text-white/50 text-xs">
-                    Todos os campos marcados com * são obrigatórios.
-                  </p>
-                </div>
-
-                {/* Name */}
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="f-name" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
-                    Nome completo *
-                  </label>
-                  <input
-                    id="f-name"
-                    type="text"
-                    required
-                    placeholder="Seu nome"
-                    value={form.name}
-                    onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors"
-                  />
-                </div>
-
-                {/* Phone + email */}
-                <div className="grid sm:grid-cols-2 gap-4">
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="f-phone" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
-                      WhatsApp *
-                    </label>
-                    <input
-                      id="f-phone"
-                      type="tel"
-                      required
-                      placeholder="(00) 00000-0000"
-                      value={form.phone}
-                      onChange={(e) => setForm({ ...form, phone: e.target.value })}
-                      className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label htmlFor="f-email" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
-                      E-mail
-                    </label>
-                    <input
-                      id="f-email"
-                      type="email"
-                      placeholder="seu@email.com"
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                      className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors"
-                    />
-                  </div>
-                </div>
-
-                {/* Message */}
-                <div className="flex flex-col gap-1.5">
-                  <label htmlFor="f-message" className="text-xs font-body font-semibold text-white/55 uppercase tracking-wide">
-                    Mensagem (opcional)
-                  </label>
-                  <textarea
-                    id="f-message"
-                    rows={4}
-                    placeholder="Conte um pouco sobre seu caso ou a melhor forma de te contatar..."
-                    value={form.message}
-                    onChange={(e) => setForm({ ...form, message: e.target.value })}
-                    className="w-full rounded-xl px-4 py-3 text-sm font-body bg-white/10 text-white placeholder-white/35 outline-none border border-white/15 focus:border-[#CBB27A] transition-colors resize-none"
-                  />
-                </div>
-
-                {/* Error */}
-                {error && (
-                  <p className="text-red-300 text-xs font-body bg-red-900/20 rounded-lg px-4 py-2">
-                    ⚠ {error}
-                  </p>
-                )}
-
-                <button
-                  id="contact-submit"
-                  type="submit"
-                  disabled={loading}
-                  className="btn-gold py-4 text-sm font-bold mt-1 disabled:opacity-60 disabled:cursor-not-allowed w-full"
-                >
-                  {loading ? "Enviando..." : "Agendar avaliação gratuita →"}
-                </button>
-
-                <p className="text-center text-white/30 text-xs font-body">
-                  Seus dados são tratados com total sigilo e privacidade.
-                </p>
-              </form>
-            )}
-          </motion.div>
-        </div>
+        {/* Dynamic Form Content with Suspense */}
+        <Suspense fallback={<div className="text-white text-center py-20">Carregando formulário...</div>}>
+          <ContatoForm />
+        </Suspense>
       </div>
     </div>
   );

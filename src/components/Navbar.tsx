@@ -13,7 +13,11 @@ const navLinks = [
   { label: "FAQ",           href: "#faq" },
 ];
 
-export function Navbar() {
+interface NavbarProps {
+  ctaHref?: string;
+}
+
+export function Navbar({ ctaHref = "/contato?source=geral" }: NavbarProps) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
 
@@ -72,7 +76,7 @@ export function Navbar() {
           <div className="hidden lg:flex items-center gap-4">
             <a
               id="nav-cta"
-              href="/contato"
+              href={ctaHref}
               className="btn-gold px-7 py-2.5 text-sm font-bold inline-block"
             >
               Agendar Consulta
@@ -129,7 +133,7 @@ export function Navbar() {
               </motion.a>
             ))}
             <a
-              href="/contato"
+              href={ctaHref}
               id="mobile-nav-cta"
               onClick={() => setMobileOpen(false)}
               className="btn-gold mt-6 py-4 text-center text-lg font-bold"

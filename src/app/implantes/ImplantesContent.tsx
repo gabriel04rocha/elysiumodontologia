@@ -5,12 +5,11 @@ import { HeroSection } from "@/components/HeroSection";
 import { TreatmentsSection } from "@/components/TreatmentsSection";
 import { ProcessSection } from "@/components/ProcessSection";
 import { FaqSection } from "@/components/FaqSection";
-import { ContactSection } from "@/components/ContactSection";
 import { ContactCTASection } from "@/components/ContactCTASection";
 import { Footer } from "@/components/Footer";
 import { ImplantWhyUs } from "@/components/ImplantWhyUs";
 import { ProtocolComparison } from "@/components/ProtocolComparison";
-import { Sparkles, Zap, Layers, Grid } from "lucide-react";
+import { Sparkles, Zap, Layers, Grid, ArrowRight } from "lucide-react";
 
 const implantTreatments = [
   {
@@ -100,7 +99,7 @@ const implantFaqs = [
 export function ImplantesContent() {
   return (
     <>
-      <Navbar />
+      <Navbar ctaHref="/contato?source=implante" />
       <main>
         <HeroSection
           badgeText="Especialistas em Implantes"
@@ -113,9 +112,14 @@ export function ImplantesContent() {
           checks={[
             "Implantes de carga imediata — rapidez e função",
             "Técnica de cirurgia guiada sem cortes",
-            "Protocolo All-on-4 para arcada completa",
+            "Protocolo Prótese Protocolo para arcada completa",
           ]}
-          primaryCtaText="Agendar Avaliação de Implante"
+          primaryCtaText={
+            <span className="flex items-center gap-2">
+              Agendar Avaliação de Implante <ArrowRight className="w-5 h-5" />
+            </span>
+          }
+          primaryCtaHref="/contato?source=implante"
           imageSrc="/Antes e depois (rosto)/rosto-antes-1.jpg"
           imageLabel="Autoestima recuperada"
           imageSublabel="Implantes de Alta Performance — Elysium"
@@ -156,8 +160,7 @@ export function ImplantesContent() {
           faqs={implantFaqs}
         />
         
-        <ContactSection source="implante" />
-        <ContactCTASection />
+        <ContactCTASection ctaHref="/contato?source=implante" />
       </main>
       <Footer />
     </>

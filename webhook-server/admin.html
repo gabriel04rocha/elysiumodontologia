@@ -256,7 +256,28 @@
         document.getElementById('kFieldPhone').innerHTML = fHtml;
         document.getElementById('kFieldEmail').innerHTML = fHtml;
         document.getElementById('kFieldMsg').innerHTML = fHtml;
-        document.getElementById('kFieldSpecialty').innerHTML = fHtml;
+
+        // Filter specialty fields (only selection types)
+        let sHtml = '<option value="">-- Selecionar Campo de Opções --</option>';
+        const filterFn = f => ['select', 'multiselect', 'radiobutton', 'checkbox', 'category'].includes(f.type) || (f.enums && f.enums.length > 0);
+        
+        if (kommoFields.leads) {
+          const filtered = kommoFields.leads.filter(filterFn);
+          if (filtered.length > 0) {
+            sHtml += '<optgroup label="Campos de Opções (Lead)">';
+            filtered.forEach(f => sHtml += `<option value="lead_${f.id}">${f.name} (${f.type})</option>`);
+            sHtml += '</optgroup>';
+          }
+        }
+        if (kommoFields.contacts) {
+          const filtered = kommoFields.contacts.filter(filterFn);
+          if (filtered.length > 0) {
+            sHtml += '<optgroup label="Campos de Opções (Contato)">';
+            filtered.forEach(f => sHtml += `<option value="contact_${f.id}">${f.name} (${f.type})</option>`);
+            sHtml += '</optgroup>';
+          }
+        }
+        document.getElementById('kFieldSpecialty').innerHTML = sHtml;
 
         // Restore config
         if(kommoStatus.config) {
@@ -301,10 +322,12 @@
       const list = type === 'lead' ? kommoFields.leads : kommoFields.contacts;
       const field = list.find(f => f.id === idRaw);
 
-      if (field && field.enums) {
+      if (field && (field.enums || (field.settings && field.settings.categories))) {
         document.getElementById('pageMappingBox').classList.remove('hidden');
         let opts = '<option value="">-- Selecione a Opção --</option>';
-        field.enums.forEach(e => opts += `<option value="${e.id}">${e.value}</option>`);
+        const enums = field.enums || (field.settings && field.settings.categories) || [];
+        enums.forEach(e => opts += `<option value="${e.id}">${e.value || e.name}</option>`);
+        
         document.getElementById('mapHome').innerHTML = opts;
         document.getElementById('mapImplante').innerHTML = opts;
 

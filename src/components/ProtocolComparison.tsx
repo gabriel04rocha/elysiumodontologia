@@ -110,7 +110,7 @@ export function ProtocolComparison() {
                 <div className="bg-[#FAF9F6] px-10 py-10 rounded-xl">
                     <h4 className="font-heading font-bold text-2xl text-deep-green mb-4">Você merece ser sua melhor versão</h4>
                     <p className="font-body text-slate-600 mb-8">Agende hoje uma avaliação e descubra o plano perfeito para seu caso.</p>
-                    <a href="#contato" className="btn-gold px-12 py-4 text-base font-bold shadow-lg">Quero agendar minha avaliação</a>
+                    <a href="/contato?source=implante" className="btn-gold px-12 py-4 text-base font-bold shadow-lg">Quero agendar minha avaliação</a>
                 </div>
             </div>
         </div>

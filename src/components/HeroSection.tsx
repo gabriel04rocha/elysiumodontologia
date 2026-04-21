@@ -29,7 +29,7 @@ export function HeroSection({
     "Planejamento digital com simulação prévia",
   ],
   primaryCtaText = "Quero meu sorriso novo",
-  primaryCtaHref = "/contato",
+  primaryCtaHref = "/contato?source=geral",
   secondaryCtaText = "Ver resultados",
   secondaryCtaHref = "#resultados",
   imageSrc = "/Antes e depois (rosto)/rosto-antes-1.jpg",

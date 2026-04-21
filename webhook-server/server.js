@@ -176,7 +176,7 @@ app.post("/submit", submitLimiter, async (req, res) => {
       const lead_custom_fields = [];
       const contact_custom_fields = [];
 
-      function parseField(val, content) {
+      function parseField(val, content, isEnum = false) {
         if (!val || !content) return;
         const parts = val.split('_');
         if (parts.length !== 2) return;
@@ -184,7 +184,7 @@ app.post("/submit", submitLimiter, async (req, res) => {
         const id = parseInt(parts[1]);
         if (isNaN(id)) return;
         
-        const mapped = { field_id: id, values: [{ value: content }] };
+        const mapped = { field_id: id, values: [isEnum ? { enum_id: parseInt(content) } : { value: content }] };
         if (type === 'lead') lead_custom_fields.push(mapped);
         if (type === 'contact') contact_custom_fields.push(mapped);
       }
@@ -195,9 +195,9 @@ app.post("/submit", submitLimiter, async (req, res) => {
 
       // Mapeamento dinâmico de Especialidade/Fonte
       if (req.body.source && config.field_specialty && config.page_mappings) {
-        const optionId = config.page_mappings[req.body.source];
+        const optionId = config.page_mappings[req.body.source === 'implante' ? 'implante' : 'geral'];
         if (optionId) {
-          parseField(config.field_specialty, parseInt(optionId));
+          parseField(config.field_specialty, optionId, true);
         }
       }
 

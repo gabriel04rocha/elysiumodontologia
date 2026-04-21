@@ -4,7 +4,11 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Phone, Mail, MapPin, Clock } from "lucide-react";
 
-export function ContactCTASection() {
+interface ContactCTAProps {
+  ctaHref?: string;
+}
+
+export function ContactCTASection({ ctaHref = "/contato?source=geral" }: ContactCTAProps) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
@@ -54,7 +58,7 @@ export function ContactCTASection() {
 
           <a
             id="contact-section-cta"
-            href="/contato"
+            href={ctaHref}
             className="btn-gold inline-block px-12 py-4 text-lg font-bold mb-12"
           >
             Quero agendar minha avaliação →
