@@ -1,36 +1,25 @@
-<IfModule mod_rewrite.c>
-  RewriteEngine On
-  RewriteBase /
+# .htaccess para Next.js Static Export (cPanel/Apache)
+# Configurado para trailingSlash: true
 
-  # 1. Permite acesso total à pasta _next e outros ativos
-  # O cPanel às vezes bloqueia pastas com underscore, isso força a permissão
-  RewriteCond %{REQUEST_URI} ^/_next/.*$
-  RewriteRule ^ - [L]
+RewriteEngine On
+RewriteBase /
 
-  # 2. Garante que imagens e logos sejam servidos sem passar pelas regras de roteamento
-  RewriteCond %{REQUEST_URI} ^/Logos/.*$ [OR]
-  RewriteCond %{REQUEST_URI} ^/favicon.ico$
-  RewriteRule ^ - [L]
+# 1. Garante que se o usuário acessar /página (sem barra), ele seja levado para /página/
+# Isso ajuda o Apache a encontrar o index.html dentro da pasta e evita erros de caminho do JS/CSS
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !index\.html
+RewriteCond %{REQUEST_URI} !(.*)/$
+RewriteRule ^(.*)$ $1/ [L,R=301]
 
-  # 3. Trata o roteamento de pastas para o Next.js (trailingSlash: true)
-  # Se o usuário acessar dominio.com/contato, redireciona para dominio.com/contato/ com barra
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_URI} !index.html$
-  RewriteCond %{REQUEST_URI} !/$
-  RewriteRule ^(.*)$ $1/ [R=301,L]
+# 2. Configura o 404 personalizado do Next.js
+ErrorDocument 404 /404.html
 
-  # Se o arquivo físico ou diretório não existir, tenta carregar o index.html da pasta correspondente
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
-  RewriteRule ^(.*)/$ $1/index.html [L,QSA]
+# 3. Impede a listagem de diretórios
+Options -Indexes
 
-  # 4. Força HTTPS
-  RewriteCond %{HTTPS} off
-  RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
-</IfModule>
-
-# Cache e Performance
+# 4. Melhora cache para arquivos estáticos do Next.js (_next/static)
 <IfModule mod_expires.c>
-  ExpiresActive On
-  ExpiresDefault "access plus 1 year"
+    ExpiresActive On
+    ExpiresDefault "access plus 1 month"
+    ExpiresByType text/html "access plus 0 seconds"
 </IfModule>

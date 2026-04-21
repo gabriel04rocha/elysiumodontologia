@@ -9,9 +9,9 @@ interface HeroProps {
   title?: React.ReactNode;
   subtitle?: React.ReactNode;
   checks?: string[];
-  primaryCtaText?: string;
+  primaryCtaText?: React.ReactNode;
   primaryCtaHref?: string;
-  secondaryCtaText?: string;
+  secondaryCtaText?: React.ReactNode;
   secondaryCtaHref?: string;
   imageSrc?: string;
   imageAlt?: string;
