@@ -193,6 +193,14 @@ app.post("/submit", submitLimiter, async (req, res) => {
       parseField(config.field_phone, phone);
       parseField(config.field_message, message);
 
+      // Mapeamento dinâmico de Especialidade/Fonte
+      if (req.body.source && config.field_specialty && config.page_mappings) {
+        const optionId = config.page_mappings[req.body.source];
+        if (optionId) {
+          parseField(config.field_specialty, parseInt(optionId));
+        }
+      }
+
       await axios.post(`https://${kommoAuth.base_domain}/api/v4/leads/complex`, [
          {
            name: `Avaliação - ${name}`,
@@ -336,7 +344,7 @@ app.get("/admin/kommo/callback", async (req, res) => {
 
 app.get("/admin/kommo/pipelines", requireAuth, async (req, res) => {
   const auth = await getKommoToken();
-  if(!auth) return res.status(401).json({error: "Kommo não autenticado"});
+  if(!auth) return res.status(403).json({error: "Kommo não autenticado ou token expirado. Por favor, autorize novamente."});
   try {
     const response = await axios.get(`https://${auth.base_domain}/api/v4/leads/pipelines`, {
       headers: { Authorization: `Bearer ${auth.access_token}` }
@@ -349,7 +357,7 @@ app.get("/admin/kommo/pipelines", requireAuth, async (req, res) => {
 
 app.get("/admin/kommo/fields", requireAuth, async (req, res) => {
   const auth = await getKommoToken();
-  if(!auth) return res.status(401).json({error: "Kommo não autenticado"});
+  if(!auth) return res.status(403).json({error: "Kommo não autenticado ou token expirado. Por favor, autorize novamente."});
   try {
     const reqLeads = axios.get(`https://${auth.base_domain}/api/v4/leads/custom_fields`, { headers: { Authorization: `Bearer ${auth.access_token}` } }).catch(() => ({ data: {} }));
     const reqContacts = axios.get(`https://${auth.base_domain}/api/v4/contacts/custom_fields`, { headers: { Authorization: `Bearer ${auth.access_token}` } }).catch(() => ({ data: {} }));

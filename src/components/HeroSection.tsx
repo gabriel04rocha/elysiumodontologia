@@ -4,7 +4,39 @@ import { motion } from "framer-motion";
 import { ArrowDown, CheckCircle2 } from "lucide-react";
 import Image from "next/image";
 
-export function HeroSection() {
+interface HeroProps {
+  badgeText?: string;
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  checks?: string[];
+  primaryCtaText?: string;
+  primaryCtaHref?: string;
+  secondaryCtaText?: string;
+  secondaryCtaHref?: string;
+  imageSrc?: string;
+  imageAlt?: string;
+  imageLabel?: string;
+  imageSublabel?: string;
+}
+
+export function HeroSection({
+  badgeText = "Odontologia Estética Avançada",
+  title,
+  subtitle,
+  checks = [
+    "Facetas de Resina — seu sorriso novo em um único dia",
+    "Lentes de Porcelana para máxima sofisticação",
+    "Planejamento digital com simulação prévia",
+  ],
+  primaryCtaText = "Quero meu sorriso novo",
+  primaryCtaHref = "/contato",
+  secondaryCtaText = "Ver resultados",
+  secondaryCtaHref = "#resultados",
+  imageSrc = "/Antes e depois (rosto)/rosto-antes-1.jpg",
+  imageAlt = "Paciente feliz após tratamento na Elysium Odontologia",
+  imageLabel = "Sorriso transformado",
+  imageSublabel = "Facetas de Resina — Elysium",
+}: HeroProps) {
   return (
     <section
       id="hero"
@@ -58,7 +90,7 @@ export function HeroSection() {
                 className="object-contain"
               />
               <span className="text-xs font-body font-semibold text-white/80 tracking-wide uppercase">
-                Odontologia Estética Avançada
+                {badgeText}
               </span>
             </motion.div>
 
@@ -70,15 +102,14 @@ export function HeroSection() {
               className="font-premium font-extrabold text-white mb-6 leading-[1.1] tracking-tight normal-case"
               style={{ fontSize: "clamp(2.6rem, 5vw, 4.2rem)" }}
             >
-              Seu sorriso,{" "}
-              <em className="not-italic font-light text-gold-light">
-                perfeito
-              </em>
-              <br />
-              como você sempre{" "}
-              <em className="not-italic text-gold" >
-                sonhou
-              </em>
+              {title || (
+                <>
+                  Seu sorriso,{" "}
+                  <em className="not-italic font-light text-gold-light">perfeito</em>
+                  <br />
+                  como você sempre <em className="not-italic text-gold">sonhou</em>
+                </>
+              )}
             </motion.h1>
 
             <motion.p
@@ -88,10 +119,14 @@ export function HeroSection() {
               className="font-body text-white/70 leading-relaxed mb-8 max-w-lg"
               style={{ fontSize: "1.05rem" }}
             >
-              Na Elysium Odontologia somos especialistas em transformar sorrisos com{" "}
-              <strong className="text-white/90">Facetas de Resina</strong> de alta
-              performance e Porcelana, unindo tecnologia e arte para um
-              resultado natural e imediato.
+              {subtitle || (
+                <>
+                  Na Elysium Odontologia somos especialistas em transformar sorrisos com{" "}
+                  <strong className="text-white/90">Facetas de Resina</strong> de alta
+                  performance e Porcelana, unindo tecnologia e arte para um
+                  resultado natural e imediato.
+                </>
+              )}
             </motion.p>
 
             {/* Checks */}
@@ -101,11 +136,7 @@ export function HeroSection() {
               transition={{ duration: 0.6, delay: 0.3 }}
               className="flex flex-col gap-2.5 mb-10"
             >
-              {[
-                "Facetas de Resina — seu sorriso novo em um único dia",
-                "Lentes de Porcelana para máxima sofisticação",
-                "Planejamento digital com simulação prévia",
-              ].map((item) => (
+              {checks.map((item) => (
                 <li key={item} className="flex items-center gap-3">
                   <CheckCircle2 className="w-5 h-5 flex-shrink-0 text-gold" />
                   <span className="text-sm font-body text-white/80">{item}</span>
@@ -122,17 +153,17 @@ export function HeroSection() {
             >
               <a
                 id="hero-cta-primary"
-                href="/contato"
+                href={primaryCtaHref}
                 className="btn-gold px-8 py-3.5 text-base font-bold"
               >
-                Quero meu sorriso novo
+                {primaryCtaText}
               </a>
               <a
                 id="hero-cta-secondary"
-                href="#resultados"
+                href={secondaryCtaHref}
                 className="btn-outline-gold px-8 py-3.5 text-base font-semibold"
               >
-                Ver resultados
+                {secondaryCtaText}
               </a>
             </motion.div>
           </div>
@@ -150,8 +181,8 @@ export function HeroSection() {
             >
               <div className="relative w-full" style={{ aspectRatio: "3/4" }}>
                 <Image
-                  src="/Antes e depois (rosto)/rosto-antes-1.jpg"
-                  alt="Paciente feliz após tratamento na Elysium Odontologia"
+                  src={imageSrc}
+                  alt={imageAlt}
                   fill
                   className="object-cover"
                   style={{ objectPosition: "center top" }}
@@ -167,10 +198,10 @@ export function HeroSection() {
                   }}
                 >
                   <p className="font-heading text-white text-lg font-semibold">
-                    Sorriso transformado
+                    {imageLabel}
                   </p>
                   <p className="font-body text-white/65 text-xs mt-0.5">
-                    Facetas de Resina — Elysium
+                    {imageSublabel}
                   </p>
                 </div>
               </div>
@@ -198,3 +229,4 @@ export function HeroSection() {
     </section>
   );
 }
+

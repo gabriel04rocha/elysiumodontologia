@@ -26,7 +26,7 @@ const infoItems = [
   },
 ];
 
-export function ContactSection() {
+export function ContactSection({ source = "geral" }: { source?: string }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
   const [sent, setSent] = useState(false);
   const [form, setForm] = useState({ name: "", phone: "", email: "", msg: "" });
@@ -47,7 +47,8 @@ export function ContactSection() {
           name: form.name,
           phone: form.phone,
           email: form.email,
-          message: form.msg
+          message: form.msg,
+          source: source
         }),
       });
 

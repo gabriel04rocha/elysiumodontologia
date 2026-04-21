@@ -3,7 +3,13 @@
 import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
-const steps = [
+interface Step {
+  number: string;
+  title: string;
+  description: string;
+}
+
+const defaultSteps: Step[] = [
   {
     number: "01",
     title: "Consulta & Diagnóstico",
@@ -30,7 +36,25 @@ const steps = [
   },
 ];
 
-export function ProcessSection() {
+interface ProcessSectionProps {
+  badgeText?: string;
+  title?: React.ReactNode;
+  steps?: Step[];
+}
+
+export function ProcessSection({
+  badgeText = "Como Funciona",
+  title = (
+    <>
+      Do diagnóstico ao sorriso perfeito
+      <br />
+      <em className="not-italic" style={{ color: "#CBB27A" }}>
+        em 4 passos simples
+      </em>
+    </>
+  ),
+  steps = defaultSteps,
+}: ProcessSectionProps) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
@@ -64,17 +88,13 @@ export function ProcessSection() {
             className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
             style={{ color: "#CBB27A" }}
           >
-            Como Funciona
+            {badgeText}
           </p>
           <h2
             className="font-heading font-bold mb-6"
             style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)", color: "#F3E6C2" }}
           >
-            Do diagnóstico ao sorriso perfeito
-            <br />
-            <em className="not-italic" style={{ color: "#CBB27A" }}>
-              em 4 passos simples
-            </em>
+            {title}
           </h2>
           <span className="divider-gold mx-auto block" />
         </motion.div>
@@ -146,3 +166,4 @@ export function ProcessSection() {
     </section>
   );
 }
+

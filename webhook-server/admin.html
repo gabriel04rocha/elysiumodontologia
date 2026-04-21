@@ -77,8 +77,28 @@
 
                 <label class="font-semibold text-sm mt-2">Campo Kommo para: "Mensagem do Paciente"</label>
                 <select id="kFieldMsg" class="p-2 border rounded text-sm w-full outline-none focus:border-teal-400"></select>
+
+                <label class="font-semibold text-sm mt-2">Campo Kommo para: "Especialidade/Origem"</label>
+                <select id="kFieldSpecialty" onchange="updateSpecialtyOptions()" class="p-2 border rounded text-sm w-full outline-none focus:border-teal-400"></select>
               </div>
             </div>
+
+            <div id="pageMappingBox" class="mt-8 border-t border-teal-50 pt-6 hidden">
+              <h3 class="font-bold text-lg text-teal-800 mb-2">Mapeamento de Páginas</h3>
+              <p class="text-xs text-slate-500 mb-4">Atribua uma opção da lista de especialidades para cada página do site.</p>
+              
+              <div class="grid md:grid-cols-2 gap-4">
+                <div class="p-4 bg-teal-50/50 rounded-xl border border-teal-100 flex flex-col gap-2">
+                  <label class="text-xs font-bold text-teal-700 uppercase">Página Principal (Geral)</label>
+                  <select id="mapHome" class="p-2 border rounded text-sm outline-none focus:border-teal-400"></select>
+                </div>
+                <div class="p-4 bg-teal-50/50 rounded-xl border border-teal-100 flex flex-col gap-2">
+                  <label class="text-xs font-bold text-teal-700 uppercase">Página de Implantes</label>
+                  <select id="mapImplante" class="p-2 border rounded text-sm outline-none focus:border-teal-400"></select>
+                </div>
+              </div>
+            </div>
+
             <button onclick="saveKommoConfig()" class="btn-teal w-full py-3 mt-6 rounded-lg font-bold shadow-md">Salvar Regras do CRM</button>
           </div>
         </div>
@@ -236,6 +256,7 @@
         document.getElementById('kFieldPhone').innerHTML = fHtml;
         document.getElementById('kFieldEmail').innerHTML = fHtml;
         document.getElementById('kFieldMsg').innerHTML = fHtml;
+        document.getElementById('kFieldSpecialty').innerHTML = fHtml;
 
         // Restore config
         if(kommoStatus.config) {
@@ -248,6 +269,10 @@
           if(cfg.field_phone) document.getElementById('kFieldPhone').value = cfg.field_phone;
           if(cfg.field_email) document.getElementById('kFieldEmail').value = cfg.field_email;
           if(cfg.field_message) document.getElementById('kFieldMsg').value = cfg.field_message;
+          if(cfg.field_specialty) {
+            document.getElementById('kFieldSpecialty').value = cfg.field_specialty;
+            updateSpecialtyOptions();
+          }
         }
 
       } catch (err) { console.error('Erro ao baixar listas kommo', err); }
@@ -263,13 +288,49 @@
       document.getElementById('kStage').innerHTML = sHtml;
     }
 
+    function updateSpecialtyOptions() {
+      const fieldId = document.getElementById('kFieldSpecialty').value;
+      if (!fieldId) {
+        document.getElementById('pageMappingBox').classList.add('hidden');
+        return;
+      }
+
+      // Find the field in kommoFields
+      const idRaw = parseInt(fieldId.split('_')[1]);
+      const type = fieldId.split('_')[0];
+      const list = type === 'lead' ? kommoFields.leads : kommoFields.contacts;
+      const field = list.find(f => f.id === idRaw);
+
+      if (field && field.enums) {
+        document.getElementById('pageMappingBox').classList.remove('hidden');
+        let opts = '<option value="">-- Selecione a Opção --</option>';
+        field.enums.forEach(e => opts += `<option value="${e.id}">${e.value}</option>`);
+        document.getElementById('mapHome').innerHTML = opts;
+        document.getElementById('mapImplante').innerHTML = opts;
+
+        // Restore mapping if exists
+        const cfg = kommoStatus.config;
+        if(cfg && cfg.page_mappings) {
+          if(cfg.page_mappings.geral) document.getElementById('mapHome').value = cfg.page_mappings.geral;
+          if(cfg.page_mappings.implante) document.getElementById('mapImplante').value = cfg.page_mappings.implante;
+        }
+      } else {
+        document.getElementById('pageMappingBox').classList.add('hidden');
+      }
+    }
+
     async function saveKommoConfig() {
       const cfg = {
         pipeline_id: document.getElementById('kPipeline').value,
         status_id: document.getElementById('kStage').value,
         field_phone: document.getElementById('kFieldPhone').value,
         field_email: document.getElementById('kFieldEmail').value,
-        field_message: document.getElementById('kFieldMsg').value
+        field_message: document.getElementById('kFieldMsg').value,
+        field_specialty: document.getElementById('kFieldSpecialty').value,
+        page_mappings: {
+          geral: document.getElementById('mapHome').value,
+          implante: document.getElementById('mapImplante').value
+        }
       };
       if(!cfg.pipeline_id || !cfg.status_id) return alert('Você deve selecionar Funil e Etapa.');
       

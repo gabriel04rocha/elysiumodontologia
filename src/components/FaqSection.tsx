@@ -5,7 +5,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Plus, Minus } from "lucide-react";
 
-const faqs = [
+interface FAQ {
+  id: string;
+  q: string;
+  a: string;
+}
+
+const defaultFaqs: FAQ[] = [
   {
     id: "faq-1",
     q: "O procedimento das facetas causam dor?",
@@ -33,11 +39,17 @@ const faqs = [
   },
 ];
 
+interface FaqSectionProps {
+  badgeText?: string;
+  title?: React.ReactNode;
+  faqs?: FAQ[];
+}
+
 function FaqItem({
   faq,
   index,
 }: {
-  faq: (typeof faqs)[0];
+  faq: FAQ;
   index: number;
 }) {
   const [open, setOpen] = useState(false);
@@ -107,7 +119,19 @@ function FaqItem({
   );
 }
 
-export function FaqSection() {
+export function FaqSection({
+  badgeText = "Dúvidas Frequentes",
+  title = (
+    <>
+      Tudo que você precisa
+      <br />
+      <em className="not-italic" style={{ color: "#8E6F3A" }}>
+        saber antes de começar
+      </em>
+    </>
+  ),
+  faqs = defaultFaqs,
+}: FaqSectionProps) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
@@ -125,17 +149,13 @@ export function FaqSection() {
             className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
             style={{ color: "#8E6F3A" }}
           >
-            Dúvidas Frequentes
+            {badgeText}
           </p>
           <h2
             className="font-heading font-bold mb-6 text-[#0E2A26]"
             style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
           >
-            Tudo que você precisa
-            <br />
-            <em className="not-italic" style={{ color: "#8E6F3A" }}>
-              saber antes de começar
-            </em>
+            {title}
           </h2>
           <span className="divider-gold mx-auto block" />
         </motion.div>
@@ -150,3 +170,4 @@ export function FaqSection() {
     </section>
   );
 }
+

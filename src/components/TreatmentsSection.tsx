@@ -4,7 +4,17 @@ import { motion } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 import { Sparkles, Shield, Zap, Eye } from "lucide-react";
 
-const treatments = [
+interface Treatment {
+  id: string;
+  icon: any;
+  title: string;
+  subtitle: string;
+  description: string;
+  benefits: string[];
+  accent: string;
+}
+
+const defaultTreatments: Treatment[] = [
   {
     id: "resina",
     icon: Sparkles,
@@ -47,11 +57,18 @@ const treatments = [
   },
 ];
 
+interface TreatmentsSectionProps {
+  badgeText?: string;
+  title?: React.ReactNode;
+  description?: string;
+  treatments?: Treatment[];
+}
+
 function TreatmentCard({
   treatment,
   index,
 }: {
-  treatment: (typeof treatments)[0];
+  treatment: Treatment;
   index: number;
 }) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.15 });
@@ -122,7 +139,20 @@ function TreatmentCard({
   );
 }
 
-export function TreatmentsSection() {
+export function TreatmentsSection({
+  badgeText = "Nossos Tratamentos",
+  title = (
+    <>
+      Soluções que transformam
+      <br />
+      <em className="not-italic" style={{ color: "#8E6F3A" }}>
+        cada sorriso
+      </em>
+    </>
+  ),
+  description = "Cada tratamento é planejado individualmente, respeitando as características únicas do seu rosto, dentes e personalidade.",
+  treatments = defaultTreatments,
+}: TreatmentsSectionProps) {
   const { ref, inView } = useInView({ triggerOnce: true, threshold: 0.1 });
 
   return (
@@ -140,24 +170,19 @@ export function TreatmentsSection() {
             className="text-xs font-body font-bold uppercase tracking-[0.22em] mb-4"
             style={{ color: "#CBB27A" }}
           >
-            Nossos Tratamentos
+            {badgeText}
           </p>
           <h2
             className="font-heading font-bold mb-6 text-[#0E2A26]"
             style={{ fontSize: "clamp(2rem, 3.5vw, 3rem)" }}
           >
-            Soluções que transformam
-            <br />
-            <em className="not-italic" style={{ color: "#8E6F3A" }}>
-              cada sorriso
-            </em>
+            {title}
           </h2>
           <span className="divider-gold mx-auto block" />
           <p
             className="font-body text-[#2D4D59]/80 mt-6 max-w-2xl mx-auto leading-relaxed"
           >
-            Cada tratamento é planejado individualmente, respeitando as
-            características únicas do seu rosto, dentes e personalidade.
+            {description}
           </p>
         </motion.div>
 
@@ -171,3 +196,4 @@ export function TreatmentsSection() {
     </section>
   );
 }
+
